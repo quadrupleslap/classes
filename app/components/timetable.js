@@ -19,6 +19,7 @@ export default React.createClass({
 
     return {
       days: null,
+      dayLength: 0,
 
       weekday: weekday,
       week: week,
@@ -30,7 +31,8 @@ export default React.createClass({
   getData() {
     if (SBHSStore.timetable)
       this.setState({
-        days: SBHSStore.timetable.days
+        days: SBHSStore.timetable.days,
+        dayLength: SBHSStore.timetable.days.reduce((prev, day) => Math.max(prev, day.periods.length), 0)
       });
   },
 
@@ -114,17 +116,21 @@ export default React.createClass({
         'background': '#FFF',
         'boxSizing': 'border-box'
       }}>
-        {periods.map((period, i) => //TODO: I shouldn't be the key here, either.
-          <div key={i} style={{ //TODO: Put in 'Free' so that all days have the same height.
-            'display': 'flex',
-            'justifyContent': 'space-between',
-            'alignItems': 'center',
-            'borderBottom': i != periods.length - 1 ? '1px solid #CCC' : null,
-            'padding': '16px'
-          }}>
-            <div style={{ 'fontSize': '1.2em' }}>{ period.title }</div>
-            <div style={{ 'fontSize': '1.5em' }}>{ period.room }</div>
-          </div>)}
+        {Array.apply(null, Array(this.state.dayLength))
+          .map((_, i) => periods[i] || {})
+          //TODO: I shouldn't be the key here, either.
+          .map((period, i) => {
+            return <div key={i} style={{
+              'display': 'flex',
+              'justifyContent': 'space-between',
+              'alignItems': 'center',
+              'borderBottom': i != periods.length - 1 ? '1px solid #CCC' : null,
+              'padding': '16px'
+            }}>
+              <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em>Free</em> }</div>
+              <div style={{ 'fontSize': '1.5em' }}>{ period.room  || "" }</div>
+            </div>;
+        })}
       </div> :null}
     </Centered>;
   }
