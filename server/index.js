@@ -3,17 +3,21 @@ var session = require('express-session');
 var compression = require('compression');
 var path = require('path');
 
-var PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var IP = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+var PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var IP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 var app = express();
 
 app.use(compression());
 
 app.use(session({
-  secret: 'We need a better secret.', //TODO: No seriously, we need a better secret.
+  store: new PG(session)({
+    conString: process.env.DATABASE_URL || process.env.OPENSHIFT_POSTGRESQL_DB_URL
+  }),
+  secret: process.env.COOKIE_SECRET, //TODO: No seriously, we need a better secret.
   saveUninitialized: false,
-  resave: false
+  resave: false,
+  cookie: { maxAge: 90 * 24 * 60 * 60 * 1000 } // 90 Days
 }));
 
 app.use(express.static( path.join(path.dirname(__dirname), 'public') ));
