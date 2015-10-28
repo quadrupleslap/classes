@@ -124,10 +124,10 @@ export default React.createClass({
               'display': 'flex',
               'justifyContent': 'space-between',
               'alignItems': 'center',
-              'borderBottom': i != periods.length - 1 ? '1px solid #CCC' : null,
+              'borderBottom': i < this.state.dayLength - 1 ? '1px solid #CCC' : null,
               'padding': '16px'
             }}>
-              <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em>Free</em> }</div>
+              <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#CCC' }}>Free</em> }</div>
               <div style={{ 'fontSize': '1.5em' }}>{ period.room  || "" }</div>
             </div>;
         })}
