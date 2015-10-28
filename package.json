@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "compression": "^1.6.0",
+    "connect-pg-simple": "^3.0.2",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "react": "^0.14.0",
