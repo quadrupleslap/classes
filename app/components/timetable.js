@@ -125,7 +125,7 @@ export default React.createClass({
               'display': 'flex',
               'justifyContent': 'space-between',
               'alignItems': 'center',
-              'height': '1.8em'
+              'height': '1.84em',
               'borderBottom': i < this.state.dayLength - 1 ? '1px solid #CCC' : null,
               'padding': '16px'
             }}>
