@@ -91,7 +91,7 @@ export default React.createClass({
               'textAlign': 'center',
               'height': '48px',
               'lineHeight': '48px',
-              'color': this.state.weekday == weekday? '#00BFFF' :undefined
+              'color': this.state.weekday == weekday? '#00BFFF' :null
             }} onClick={() => this.setState({ weekday: weekday })}>{weekday[0]}</div>)}
         </div>
         <div style={{ 'display': 'flex', 'width': '100%' }}>
@@ -101,7 +101,7 @@ export default React.createClass({
               'textAlign': 'center',
               'height': '48px',
               'lineHeight': '48px',
-              'color': this.state.week == week? '#00BFFF' :undefined
+              'color': this.state.week == week? '#00BFFF' :null
             }} onClick={() => this.setState({ week: week })}>{week}</div>)}
         </div>
       </div>
@@ -119,6 +119,7 @@ export default React.createClass({
         {Array.apply(null, Array(this.state.dayLength))
           .map((_, i) => periods[i] || {})
           //TODO: I shouldn't be the key here, either.
+          //TODO: Perhaps the Free is too light?
           .map((period, i) => {
             return <div key={i} style={{
               'display': 'flex',
@@ -128,7 +129,7 @@ export default React.createClass({
               'padding': '16px'
             }}>
               <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#CCC' }}>Free</em> }</div>
-              <div style={{ 'fontSize': '1.5em' }}>{ period.room  || "" }</div>
+              <div style={{ 'fontSize': '1.5em' }}>{ period.room  || " " }</div>
             </div>;
         })}
       </div> :null}
