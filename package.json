@@ -1,0 +1,32 @@
+{
+  "name": "classes",
+  "version": "0.0.1",
+  "description": "A timetable app for the bored.",
+  "scripts": {
+    "start": "node server/index"
+  },
+  "main": "server/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quadrupleslap/classes.git"
+  },
+  "author": "Ram Kaniyur",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quadrupleslap/classes/issues"
+  },
+  "homepage": "https://github.com/quadrupleslap/classes#readme",
+  "devDependencies": {
+    "babel-core": "^5.8.22",
+    "babel-loader": "^5.3.2",
+    "webpack": "^1.11.0",
+    "webpack-closure-compiler": "^1.0.0"
+  },
+  "dependencies": {
+    "compression": "^1.6.0",
+    "express": "^4.13.3",
+    "express-session": "^1.11.3",
+    "react": "^0.14.0",
+    "simple-oauth2": "^0.2.1"
+  }
+}
