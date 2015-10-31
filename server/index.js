@@ -12,10 +12,10 @@ var app = express();
 app.use(compression());
 
 app.use(session({
-  store: new pgSession({
+  store: process.env.NODE_ENV === 'production' ? new pgSession({
     conString: process.env.DATABASE_URL
       || process.env.OPENSHIFT_POSTGRESQL_DB_URL
-  }),
+  }) : null,
   secret: process.env.COOKIE_SECRET, //TODO: No seriously, we need a better secret.
   saveUninitialized: false,
   resave: false,

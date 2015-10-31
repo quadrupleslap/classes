@@ -22,9 +22,7 @@ export default React.createClass({
       dayLength: 0,
 
       weekday: weekday,
-      week: week,
-
-      refreshTimeoutID: null
+      week: week
     };
   },
 
@@ -38,24 +36,11 @@ export default React.createClass({
 
   componentWillMount() {
     SBHSStore.bind('timetable', this.getData);
-    SBHSStore.bind('token', SBHSStore.fetchTimetable);
-
-    let refresh = () => {
-      SBHSStore.fetchTimetable();
-      this.setState({
-        refreshTimeoutID: window.setTimeout(refresh, (60 - new Date().getMinutes()) * 60 * 1000)
-      });
-    };
-
     this.getData();
-    refresh();
   },
 
   componentWillUnmount() {
     SBHSStore.unbind('timetable', this.getData);
-    SBHSStore.unbind('token', SBHSStore.fetchTimetable);
-
-    window.clearTimeout(this.state.refreshTimeoutID);
   },
 
   render() {

@@ -15,8 +15,6 @@ export default React.createClass({
       periods: [],
       nextTime: null,
       nextBell: null,
-
-      refreshTimeoutID: null,
       nextBellTimeoutID: null
     };
   },
@@ -54,8 +52,6 @@ export default React.createClass({
           nextBell: null,
           nextBellTimeoutID: null
         });
-
-        SBHSStore.fetchToday();
       };
 
       getNextBell();
@@ -69,24 +65,11 @@ export default React.createClass({
 
   componentWillMount() {
     SBHSStore.bind('today', this.getData);
-    SBHSStore.bind('token', SBHSStore.fetchToday);
-
-    let refresh = () => {
-      SBHSStore.fetchToday();
-      this.setState({
-        refreshTimeoutID: window.setTimeout(refresh, (60 - new Date().getMinutes()) * 60 * 1000)
-      });
-    };
-
     this.getData();
-    refresh();
   },
 
   componentWillUnmount() {
     SBHSStore.unbind('today', this.getData);
-    SBHSStore.unbind('token', SBHSStore.fetchToday);
-
-    window.clearTimeout(this.state.refreshTimeoutID);
     window.clearTimeout(this.state.nextBellTimeoutID);
   },
 

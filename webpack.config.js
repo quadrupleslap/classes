@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ClosureCompilerPlugin = require('webpack-closure-compiler');
+var AppCachePlugin = require('appcache-webpack-plugin');
 
 var plugins = [
     new webpack.DefinePlugin({
@@ -9,7 +10,10 @@ var plugins = [
       },
     }),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(false)
+    new webpack.optimize.OccurenceOrderPlugin(false),
+    new AppCachePlugin({
+      output: 'main.appcache'
+    })
   ];
 
 if (process.env.NODE_ENV != 'development')

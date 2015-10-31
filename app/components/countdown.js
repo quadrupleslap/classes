@@ -1,7 +1,5 @@
 import React, {PropTypes} from 'react';
 
-import SBHSStore from '../stores/sbhs';
-
 export default React.createClass({
   propTypes: {
     to: PropTypes.instanceOf(Date).isRequired

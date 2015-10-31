@@ -15,8 +15,6 @@ export default React.createClass({
     return {
       notices: null,
       date: null,
-
-      refreshTimeoutID: null
     };
   },
 
@@ -31,24 +29,11 @@ export default React.createClass({
 
   componentWillMount() {
     SBHSStore.bind('notices', this.getData);
-    SBHSStore.bind('token', SBHSStore.fetchNotices);
-
-    let refresh = () => {
-      SBHSStore.fetchNotices();
-      this.setState({
-        refreshTimeoutID: window.setTimeout(refresh, (60 - new Date().getMinutes()) * 60 * 1000)
-      });
-    };
-
     this.getData();
-    refresh();
   },
 
   componentWillUnmount() {
     SBHSStore.unbind('notices', this.getData);
-    SBHSStore.unbind('token', SBHSStore.fetchNotices);
-
-    window.clearTimeout(this.state.refreshTimeoutID);
   },
 
   render() {
