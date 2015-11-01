@@ -22,7 +22,7 @@ export default React.createClass({
     let buttons = [];
     for (let i = 0; i < this.props.tabs.length; i++) {
       if (!this.props.tabs[i].button) { // Assume it's a divider.
-        buttons.push(<li key={i} style={{ 'flexGrow': 1 }} />);
+        buttons.push(<li key={i} style={{ 'flexGrow': '1;' }} />); //HACK: ; required for unitless values
         continue;
       }
 
