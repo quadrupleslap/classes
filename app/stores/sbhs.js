@@ -1,5 +1,6 @@
 import Emitter from '../utilities/emitter';
 import {get, jsonp} from '../utilities/request';
+import parseTime from '../utilities/parse-time';
 
 import defaultBells from '../data/default-bells';
 
@@ -24,14 +25,12 @@ class SBHSStore extends Emitter {
     });
 
     this.bind('today', () => {
-      let date = new Date(this.today.date.valueOf());
-      let [hour, minute] = this.today.bells[this.today.bells.length - 1].time.split(':');
-      date.setHours(hour);
-      date.setMinutes(minute);
       window.setTimeout(() => {
         this._fetchToday();
         this._fetchNotices();
-      }, date.valueOf() - Date.now());
+      }, parseTime(
+        new Date(this.today.date),
+        this.today.bells[this.today.bells.length - 1].time) - Date.now());
     });
 
     window.setInterval(() => {
@@ -54,12 +53,7 @@ class SBHSStore extends Emitter {
       bells = defaultBells(today.date);
 
       if (bells.length > 0) {
-        let date = new Date(today.date.valueOf());
-        let [hour, minute] = bells[bells.length - 1].time.split(':');
-        date.setHours(hour);
-        date.setMinutes(minute);
-
-        if (date > Date.now())
+        if (parseTime(new Date(today.date), bells[bells.length - 1].time) > Date.now())
           break;
       }
 

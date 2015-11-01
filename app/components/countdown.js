@@ -14,7 +14,7 @@ export default React.createClass({
 
   componentWillMount() {
     let tick = () => {
-      let t = this.props.to.valueOf() - Date.now();
+      let t = this.props.to - Date.now();
 
       let seconds = Math.floor( (t/1000) % 60 ),
           minutes = Math.floor( (t/(1000*60)) % 60 ),

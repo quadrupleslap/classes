@@ -6,6 +6,8 @@ import Countdown from './countdown';
 import Icon from './icon';
 import Loader from './loader';
 
+import parseTime from '../utilities/parse-time';
+
 //TODO: What if `today` is outdated? Hmm...
 //TODO: Add a notification if finalized is false.
 export default React.createClass({
@@ -28,20 +30,18 @@ export default React.createClass({
 
       let getNextBell = () => {
         if (bells) {
-          let date = new Date(SBHSStore.today.date.valueOf()),
+          let date = new Date(SBHSStore.today.date),
               now = Date.now();
           for (let i = 0; i < bells.length; i++) {
             let bell = bells[i];
-      
-            let hour_minute = bell.time.split(':');
-            date.setHours(hour_minute[0]);
-            date.setMinutes(hour_minute[1]);
+
+            parseTime(date, bell.time);
             
             if (date > now) {
               return this.setState({
                 nextBell: bell,
                 nextTime: date,
-                nextBellTimeoutID: setTimeout(getNextBell, date.valueOf() - Date.now())
+                nextBellTimeoutID: setTimeout(getNextBell, date - Date.now())
               });
             }
           }
