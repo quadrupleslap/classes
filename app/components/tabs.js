@@ -6,10 +6,10 @@ export default React.createClass({
   },
 
   propTypes: {
+    //TODO: Fix this propType.
     tabs: PropTypes.arrayOf(PropTypes.shape({
       button: PropTypes.node,
-      content: PropTypes.node,
-      id: PropTypes.string
+      content: PropTypes.node
     })).isRequired,
     activeButtonStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
@@ -21,9 +21,14 @@ export default React.createClass({
   render() {
     let buttons = [];
     for (let i = 0; i < this.props.tabs.length; i++) {
+      if (!this.props.tabs[i].button) { // Assume it's a divider.
+        buttons.push(<li key={i} style={{ 'flexGrow': 1 }} />);
+        continue;
+      }
+
       buttons.push(
         <li
-          key={this.props.tabs[i].id}
+          key={i}
           style={{
               ...this.props.buttonStyle,
               ...(i == this.state.selectedIndex ? { ...this.props.activeButtonStyle, 'background': '#00BFFF' } : {}),
@@ -31,9 +36,9 @@ export default React.createClass({
               'display': 'flex',
               'boxSizing': 'border-box',
               'textAlign': 'center',
-              'width': '100%'
+              'width': '100%',
             }}
-          onClick={() => this.setState({ selectedIndex: i })}>
+          onClick={this.props.tabs[i].content && () => this.setState({ selectedIndex: i })}>
           { this.props.tabs[i].button }
         </li>);
     }

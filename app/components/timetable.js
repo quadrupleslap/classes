@@ -70,8 +70,8 @@ export default React.createClass({
           'fontSize': '16px'
         }}>
         <div style={{ 'display': 'flex', 'width': '100%' }}>
-          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(weekday =>
-            <div style={{
+          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((weekday, i) =>
+            <div key={i} style={{
               'flex': '1 1 auto',
               'textAlign': 'center',
               'height': '48px',
@@ -80,8 +80,8 @@ export default React.createClass({
             }} onClick={() => this.setState({ weekday: weekday })}>{weekday[0]}</div>)}
         </div>
         <div style={{ 'display': 'flex', 'width': '100%' }}>
-          {['A', 'B', 'C'].map(week =>
-            <div style={{
+          {['A', 'B', 'C'].map((week, i) =>
+            <div key={i} style={{
               'flex': '1 1 auto',
               'textAlign': 'center',
               'height': '48px',
