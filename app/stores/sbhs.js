@@ -108,7 +108,7 @@ class SBHSStore extends Emitter {
     if (this.token) {
       get(`https://student.sbhs.net.au/api/timetable/daytimetable.json?&access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
-          return alert('ERROR!'); //TODO: Snackbar.
+          return alert('Could not load day timetable.'); //TODO: Snackbar.
 
         let data = JSON.parse(objectString);
 
@@ -165,7 +165,7 @@ class SBHSStore extends Emitter {
     } else {
       get('https://student.sbhs.net.au/api/timetable/bells.json', (err, objectString) => {
         if (err)
-          return alert('ERROR!'); //TODO: Snackbar.
+          return alert('Could not load bells.'); //TODO: Snackbar.
 
         let data = JSON.parse(objectString);
 
@@ -190,7 +190,7 @@ class SBHSStore extends Emitter {
     if (this.token) {
       get(`https://student.sbhs.net.au/api/dailynews/list.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
-          return alert('ERROR!') //TODO: Snackbar.
+          return alert('Could not load notices.') //TODO: Snackbar.
 
         let data = JSON.parse(objectString);
 
@@ -223,7 +223,7 @@ class SBHSStore extends Emitter {
     if (this.token) {
       get(`https://student.sbhs.net.au/api/timetable/timetable.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
-          return alert('ERROR!'); //TODO: Snackbar.
+          return alert('Could not load timetable.'); //TODO: Snackbar.
 
         let data = JSON.parse(objectString);
 

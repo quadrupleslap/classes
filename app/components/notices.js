@@ -9,7 +9,6 @@ import Expandable from './expandable';
 //TODO: Year filter.
 //TODO: Meeting options and stuff.
 //TODO: Tell the user to log in if they aren't logged in instead of loading forever.
-//TODO: Notices is completely broken because __innerHTML doesn't get mangled all too well.
 export default React.createClass({
   getInitialState() {
     return {
