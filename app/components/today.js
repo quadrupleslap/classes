@@ -82,9 +82,9 @@ export default React.createClass({
     let {periods, nextBell, nextTime} = this.state;
 
     return <Centered vertical horizontal>
-      {nextBell? <div style={{ 'padding': '8px' }}>
+      {nextBell? <div style={{ 'background': 'rgba(255,255,255,0.3)', 'width': '100%', 'text-align': 'center', 'padding': '1em 0', 'color': '#000' }}>
         <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> <span style={{ 'fontSize': '1em' }}>in</span>
-        <Countdown to={nextTime} style={{ 'fontSize': periods.length? '5em' : '16vw', 'fontWeight': '300' }} />
+        <Countdown to={nextTime} style={{ 'fontSize': '5em', 'fontWeight': '300' }} />
       </div> : <Loader />}
 
       {periods.length? <div style={{
