@@ -215,6 +215,7 @@ class SBHSStore extends Emitter {
 
   _fetchTimetable() {
     if (this.token) {
+      //TODO: Improve the parsing of this so all periods have the same length.
       get(`https://student.sbhs.net.au/api/timetable/timetable.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load timetable. Error: ${err}. Data: ${objectString}`); //TODO: Snackbar.
