@@ -9,6 +9,7 @@ import defaultBells from '../data/default-bells';
 let localStorage = window['localStorage'];
 let alert = window['alert'];
 
+//TODO: Take online/offline status into account.
 class SBHSStore extends Emitter {
   constructor() {
     super();
@@ -39,6 +40,12 @@ class SBHSStore extends Emitter {
     }, 15 * 60 * 1000); // 15 minutes.
 
     this._fetchToken();
+  }
+
+  clearCache() {
+    delete localStorage.token;
+    delete localStorage.notices;
+    delete localStorage.timetable;
   }
 
   _defaultToday() {

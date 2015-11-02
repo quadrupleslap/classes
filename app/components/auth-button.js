@@ -39,7 +39,7 @@ export default React.createClass({
         style={{ 'margin': 'auto' }}
         icon="logout"
         onClick={() => {
-          window['localStorage'].clear();
+          SBHSStore.clearCache();
           window.location.href = '/auth/logout';
         }} /> :
       <Icon
