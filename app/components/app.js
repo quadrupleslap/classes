@@ -3,6 +3,8 @@ import React from 'react';
 import Today from './today';
 import Timetable from './timetable';
 import Notices from './notices';
+
+import AuthButton from './auth-button';
 import Tabs from './tabs';
 import Icon from './icon';
 
@@ -16,12 +18,7 @@ export default React.createClass({
       {button: icon('news'), content: <Notices />},
       {button: icon('settings'), content: 'Bow down to our lord and saviour the Helix!'},
       {},
-      { //TODO: FILL IN THIS STUB LOGIN BUTTON ALREADY!!!
-        button: <Icon
-          style={{ 'margin': 'auto' }}
-          icon="login"
-          onClick={() => window.location.href = '/auth/login'} />
-      }];
+      {button: <AuthButton />}];
 
     return <Tabs tabs={tabs} buttonStyle={{ height: '4em' }} width='4em' />;
   }

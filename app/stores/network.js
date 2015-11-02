@@ -13,3 +13,5 @@ class NetworkStore extends Emitter {
     this.trigger('online');
   }
 }
+
+export default new NetworkStore();

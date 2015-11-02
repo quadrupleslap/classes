@@ -103,7 +103,6 @@ export default React.createClass({
       }}>
         {Array.apply(null, Array(this.state.dayLength))
           .map((_, i) => periods[i] || {})
-          //TODO: I shouldn't be the key here, either.
           //TODO: Perhaps the Free is too light?
           .map((period, i) => {
             return <div key={i} style={{

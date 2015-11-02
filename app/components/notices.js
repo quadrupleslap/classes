@@ -49,7 +49,6 @@ export default React.createClass({
         'boxShadow': '0 2px 5px rgba(0,0,0,0.26)'
       }}>
         {this.state.notices.map((notice, i) =>
-          //TODO: The index SHOULD NOT be the key. Find something unique.
           <Expandable
             style={{ 'padding': '1em', borderBottom: i != this.state.notices.length - 1 ? '1px solid #CCC' : null }}
             key={i}

@@ -280,6 +280,4 @@ class SBHSStore extends Emitter {
   }
 }
 
-let store = new SBHSStore();
-
-export default store;
+export default new SBHSStore();
