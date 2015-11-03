@@ -75,7 +75,6 @@ export default React.createClass({
 
   //TODO: DIV OVERLOAD!!!
   //TODO: Make sure periods change correctly, because it doesn't seem like they are.
-  //TODO: Change variation highlighting colour if you want to.
   render() {
     const VARIATION_COLOR = '#00BFFF';
 
