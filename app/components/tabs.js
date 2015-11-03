@@ -6,11 +6,13 @@ export default React.createClass({
   },
 
   propTypes: {
-    //TODO: Fix this propType.
-    tabs: PropTypes.arrayOf(PropTypes.shape({
-      button: PropTypes.node,
-      content: PropTypes.node
-    })).isRequired,
+    tabs: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.shape({
+        button: PropTypes.node,
+        content: PropTypes.node
+      }),
+      PropTypes.shape({})
+    ])).isRequired,
     activeButtonStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
     headerStyle: PropTypes.object,
