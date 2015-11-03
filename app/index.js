@@ -6,4 +6,13 @@ import App from './components/app';
 ReactDOM.render(<App />, document.getElementById('app'));
 
 //TODO: Put this somewhere better. And fix overflow scrolling if this doesn't do it.
-document.addEventListener('touchmove', e => e.preventDefault());
+document.addEventListener('touchstart', e => {
+  startY = event.touches[0].pageY;
+  startTopScroll = elem.scrollTop;
+
+  if(startTopScroll <= 0)
+    elem.scrollTop = 1;
+
+  if(startTopScroll + elem.offsetHeight >= elem.scrollHeight)
+    elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
+});
