@@ -21,15 +21,11 @@ export default React.createClass({
   },
 
   render() {
-    let buttons = [];
-    for (let i = 0; i < this.props.tabs.length; i++) {
-      if (!this.props.tabs[i].button) { // Assume it's a divider.
-        buttons.push(<li key={i} style={{ 'flexGrow': '1;' }} />); //HACK: ; required for unitless values
-        continue;
-      }
+    let buttons = this.props.tabs.map((tab, i) => {
+      if (!this.props.tabs[i].button) // Assume it's a divider.
+        return <li key={i} style={{ 'flexGrow': '1;' }} />; //HACK: ; required for unitless values
 
-      buttons.push(
-        <li
+      return <li
           key={i}
           style={{
               ...this.props.buttonStyle,
@@ -41,10 +37,10 @@ export default React.createClass({
               'width': '100%',
             }}
           //TODO: Also let us specify our own custom onClick handler.
-          onClick={this.props.tabs[i].content && () => this.setState({ selectedIndex: i })}>
-          { this.props.tabs[i].button }
-        </li>);
-    }
+          onClick={tab.content && () => this.setState({ selectedIndex: i })}>
+          { tab.button }
+        </li>;
+    });
 
     return <div style={{ height: '100%' }}>
       <ul style={{
