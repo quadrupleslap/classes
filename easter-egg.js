@@ -22,7 +22,7 @@ function getVideo(videoID, cb) {
       if (!streamsStr)
         return cb('No videos found.');
 
-      var streams = streamsStr.split(',').map(function (a) { console.log(a, '\n\n\n'); return qs.parse(a); });
+      var streams = streamsStr.split(',').map(function (a) { return qs.parse(a); });
       if (streams.length == 0)
         return cb('No videos found.');
 
@@ -42,15 +42,13 @@ function getVideo(videoID, cb) {
         }
       })[0];
 
-      console.log(stream);
-
       cb(null, stream);
     });
   });
 }
 
 module.exports = function (app) {
-  app.get('/data/:id', function (req, res) {
+  app.get('/stream/:id', function (req, res) {
     getVideo(req.params.id, function (err, videoInfo) {
       if (err)
         req.status(400).send(err);
@@ -72,6 +70,15 @@ module.exports = function (app) {
           res.end();
         });
       });
-    })
-  })
+    });
+  });
+
+  app.get('/redirect/:id', function (req, res) {
+    getVideo(req.params.id, function (err, videoInfo) {
+      if (err)
+        req.status(400).send(err);
+
+      res.redirect(videoInfo.url);
+    });
+  });
 }
