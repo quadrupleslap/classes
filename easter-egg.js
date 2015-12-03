@@ -48,7 +48,7 @@ function getVideo(videoID, cb) {
 }
 
 module.exports = function (app) {
-  app.get('/stream/:id', function (req, res) {
+  app.get('/e/stream/:id', function (req, res) {
     getVideo(req.params.id, function (err, videoInfo) {
       if (err)
         req.status(400).send(err);
@@ -73,7 +73,7 @@ module.exports = function (app) {
     });
   });
 
-  app.get('/redirect/:id', function (req, res) {
+  app.get('/e/redirect/:id', function (req, res) {
     getVideo(req.params.id, function (err, videoInfo) {
       if (err)
         req.status(400).send(err);
