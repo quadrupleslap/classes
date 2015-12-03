@@ -9,6 +9,14 @@ var IP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 var app = express();
 
+try {
+  var egg = require('../easter-egg');
+  egg(app);
+  console.log('Easter egg activated!')
+} catch (_) {
+  console.log('Easter egg not found, moving on.')
+}
+
 app.use(compression());
 
 app.use(session({
