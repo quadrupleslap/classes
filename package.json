@@ -30,7 +30,6 @@
     "express-session": "^1.11.3",
     "react": "^0.14.1",
     "react-dom": "^0.14.1",
-    "simple-oauth2": "^0.2.1",
-    "unblocker": "^1.0.8"
+    "simple-oauth2": "^0.2.1"
   }
 }
