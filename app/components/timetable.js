@@ -108,7 +108,7 @@ export default React.createClass({
             'borderBottom': i < periods.length - 1 ? '1px solid #CCC' : null,
             'padding': '16px'
           }}>
-            <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#CCC' }}>Free</em> }</div>
+            <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#AAA' }}>Free</em> }</div>
             <div style={{ 'fontSize': '1.5em' }}>{ period.room  || "" }</div>
           </div>;
         })}
