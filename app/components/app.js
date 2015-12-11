@@ -16,6 +16,7 @@ export default React.createClass({
       {button: icon('timer'), content: <Today />},
       {button: icon('calendar'), content: <Timetable />},
       {button: icon('news'), content: <Notices />},
+      //TODO: SETTINGS YOU IDIOT.
       {button: icon('settings'), content: 'Bow down to our lord and saviour the Helix!'},
       {},
       {button: <AuthButton />}];
@@ -24,4 +25,4 @@ export default React.createClass({
   }
 });
 
-//TODO: Prevent overflow scrolling of body.
+//TODO: Prevent overflow scrolling of body. And add overflow-scrolling to other stuff.

@@ -19,8 +19,6 @@ export default React.createClass({
 
     return {
       days: null,
-      dayLength: 0,
-
       weekday: weekday,
       week: week
     };
@@ -29,8 +27,7 @@ export default React.createClass({
   getData() {
     if (SBHSStore.timetable)
       this.setState({
-        days: SBHSStore.timetable.days,
-        dayLength: SBHSStore.timetable.days.reduce((prev, day) => Math.max(prev, day.periods.length), 0)
+        days: SBHSStore.timetable.days
       });
   },
 
@@ -101,21 +98,19 @@ export default React.createClass({
         'background': '#FFF',
         'boxSizing': 'border-box'
       }}>
-        {Array.apply(null, Array(this.state.dayLength))
-          .map((_, i) => periods[i] || {})
+        {periods.map((period, i) => {
           //TODO: Perhaps the Free is too light?
-          .map((period, i) => {
-            return <div key={i} style={{
-              'display': 'flex',
-              'justifyContent': 'space-between',
-              'alignItems': 'center',
-              'height': '1.84em',
-              'borderBottom': i < this.state.dayLength - 1 ? '1px solid #CCC' : null,
-              'padding': '16px'
-            }}>
-              <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#CCC' }}>Free</em> }</div>
-              <div style={{ 'fontSize': '1.5em' }}>{ period.room  || "" }</div>
-            </div>;
+          return <div key={i} style={{
+            'display': 'flex',
+            'justifyContent': 'space-between',
+            'alignItems': 'center',
+            'height': '1.84em',
+            'borderBottom': i < periods.length - 1 ? '1px solid #CCC' : null,
+            'padding': '16px'
+          }}>
+            <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#CCC' }}>Free</em> }</div>
+            <div style={{ 'fontSize': '1.5em' }}>{ period.room  || "" }</div>
+          </div>;
         })}
       </div> :null}
     </Centered>;

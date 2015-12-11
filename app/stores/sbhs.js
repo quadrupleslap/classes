@@ -4,8 +4,6 @@ import parseTime from '../utilities/parse-time';
 
 import defaultBells from '../data/default-bells';
 
-//TODO: Namespace localStorage.
-
 let localStorage = window['localStorage'];
 let alert = window['alert'];
 
@@ -222,7 +220,6 @@ class SBHSStore extends Emitter {
 
   _fetchTimetable() {
     if (this.token) {
-      //TODO: Improve the parsing of this so all periods have the same length.
       get(`https://student.sbhs.net.au/api/timetable/timetable.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load timetable. Error: ${err}. Data: ${objectString}`); //TODO: Snackbar.
@@ -254,24 +251,32 @@ class SBHSStore extends Emitter {
           },
           subjects: subjects,
           days: Object.keys(rawDays)
-            .sort((a, b) => parseInt(a) - parseInt(b))
+            .map(i => parseInt(i))
+            .sort((a, b) => a - b)
             .map(key => {
-              let periods = Object.keys(rawDays[key]['periods'])
-                .sort((a, b) => parseInt(a) - parseInt(b))
-                .map(i => {
-                  let rawPeriod = rawDays[key]['periods'][i];
+              let rawDay = rawDays[key],
+                periods = [];
 
+              let indices = rawDay['routine'].match(/\d/g),
+                rawPeriods = rawDay['periods'];
+
+              for (let ii = 0; ii < indices.length; ii++) {
+                let rawPeriod = rawPeriods[indices[ii]];
+                if (rawPeriod) {
                   let abbr = rawPeriod['year'] + rawPeriod['title'], j;
                   for (j = subjects.length; j--;)
                     if (abbr === subjects[j].abbr)
                       break;
 
-                  return {
+                  periods.push({
                     title: subjects[j].title,
                     room: rawPeriod['room'],
                     teacher: subjects[j].teacher
-                  };
-                });
+                  });
+                } else {
+                  periods.push({});
+                }
+              }
 
               return {
                 periods: periods,
