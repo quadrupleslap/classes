@@ -6,7 +6,6 @@ import Loader from './loader';
 import Expandable from './expandable';
 
 //TODO: What if notices is outdated? Huh...
-//TODO: Year filter.
 //TODO: Meeting options and stuff.
 //TODO: Tell the user to log in if they aren't logged in instead of loading forever.
 export default React.createClass({

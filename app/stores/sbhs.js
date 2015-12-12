@@ -12,6 +12,11 @@ class SBHSStore extends Emitter {
   constructor() {
     super();
 
+    this.LOADING = 0;
+    this.LOGGED_IN = 1;
+    this.LOGGED_OUT = 2;
+
+    this.state = this.LOADING;
     this.token = null;
     this.notices = localStorage.notices ? JSON.parse(localStorage.notices) : null;
     this.timetable = localStorage.timetable ? JSON.parse(localStorage.timetable) : null;
@@ -78,6 +83,7 @@ class SBHSStore extends Emitter {
 
   _fetchToken() {
     let done = (data) => {
+      this.state = this.LOGGED_IN;
       this.token = data['accessToken'];
       window.setTimeout(
         () => this._fetchToken(),
@@ -93,7 +99,7 @@ class SBHSStore extends Emitter {
 
     get('/auth/token', (err, res) => {
       if (err) {
-        // This cycle shall never start anew.
+        this.state = this.LOGGED_OUT;
         this.token = null;
         return this.trigger('token');
       }

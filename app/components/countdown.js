@@ -43,6 +43,6 @@ export default React.createClass({
 
   render() {
     let { to, ...props } = this.props;
-    return <div {...props}>{this.state.text}</div>;
+    return <section {...props}>{this.state.text}</section>;
   }
 });

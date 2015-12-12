@@ -36,7 +36,6 @@ export default React.createClass({
               'textAlign': 'center',
               'width': '100%',
             }}
-          //TODO: Also let us specify our own custom onClick handler.
           onClick={tab.content && () => this.setState({ selectedIndex: i })}>
           { tab.button }
         </li>;

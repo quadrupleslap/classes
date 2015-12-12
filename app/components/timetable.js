@@ -5,16 +5,19 @@ import Centered from './centered';
 import Loader from './loader';
 import Expandable from './expandable';
 
+const WEEKS = ['A', 'B', 'C'];
+const MS_TO_WEEKS = 1/(1000 * 60 * 60 * 24 * 7);
+
 export default React.createClass({
   getInitialState() {
     let weekday = 'Monday', week = 'A';
     if (SBHSStore.today && SBHSStore.today.day) {
       let components = SBHSStore.today.day.split(' ');
       weekday = components[0];
-      week = components[1];
+      // Test this.
+      week = WEEKS[(WEEKS.indexOf(components[1]) + Math.floor(Date.now() * MS_TO_WEEKS) - Math.floor(SBHSStore.today.date * MS_TO_WEEKS)) % 3];
     }
 
-    //TODO: Roll forward from today.date if we have it instead of naively using it.
     //TODO: Loader and login request message and stuff liek that.
 
     return {
@@ -99,7 +102,6 @@ export default React.createClass({
         'boxSizing': 'border-box'
       }}>
         {periods.map((period, i) => {
-          //TODO: Perhaps the Free is too light?
           return <div key={i} style={{
             'display': 'flex',
             'justifyContent': 'space-between',

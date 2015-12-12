@@ -9,7 +9,6 @@ import Loader from './loader';
 import parseTime from '../utilities/parse-time';
 
 //TODO: What if `today` is outdated? Hmm...
-//TODO: Add a notification if finalized is false.
 export default React.createClass({
   getInitialState() {
     return {
