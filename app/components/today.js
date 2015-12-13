@@ -8,72 +8,69 @@ import Loader from './loader';
 
 import parseTime from '../utilities/parse-time';
 
-//TODO: What if `today` is outdated? Hmm...
 export default React.createClass({
   getInitialState() {
     return {
-      bells: [],
-      periods: [],
+      bells: null,
+      periods: null,
+      date: null,
+
       nextTime: null,
       nextBell: null,
-      nextBellTimeoutID: null
+
+      timeout: null
     };
   },
 
   getData() {
     if (SBHSStore.today) {
-      let bells = SBHSStore.today.bells;
-      let periods = bells && bells.filter(bell => bell.room);
-
-      window.clearTimeout(this.state.nextBellTimeoutID);
-
-      let getNextBell = () => {
-        if (bells) {
-          let date = new Date(SBHSStore.today.date),
-              now = Date.now();
-          for (let i = 0; i < bells.length; i++) {
-            let bell = bells[i];
-
-            parseTime(date, bell.time);
-            
-            if (date > now) {
-              return this.setState({
-                nextBell: bell,
-                nextTime: date,
-                nextBellTimeoutID: setTimeout(getNextBell, date - Date.now())
-              });
-            }
-          }
-        }
-
-        this.setState({
-          nextTime: null,
-          nextBell: null,
-          nextBellTimeoutID: null
-        });
-      };
-
-      getNextBell();
-
       this.setState({
-        periods: periods,
-        bells: bells
+        bells: SBHSStore.today.bells,
+        periods: SBHSStore.today.bells.filter(bell => bell.room),
+        date: SBHSStore.today.date
       });
     }
+  },
+
+  loop() {
+    let bells = this.state.bells;
+
+    if (bells) {
+      let date = new Date(this.state.date),
+          now = Date.now();
+
+      for (let i = 0; i < bells.length; i++) {
+        let bell = bells[i];
+        parseTime(date, bell.time);
+        
+        if (date > now) {
+          return this.setState({
+            nextBell: bell,
+            nextTime: date,
+            timeout: setTimeout(this.loop, date - now)
+          });
+        }
+      }
+    }
+
+    this.setState({
+      nextTime: null,
+      nextBell: null,
+      timeout: setTimeout(this.loop, 100)
+    });
   },
 
   componentWillMount() {
     SBHSStore.bind('today', this.getData);
     this.getData();
+    this.loop();
   },
 
   componentWillUnmount() {
     SBHSStore.unbind('today', this.getData);
-    window.clearTimeout(this.state.nextBellTimeoutID);
+    window.clearTimeout(this.state.timeout);
   },
 
-  //TODO: DIV OVERLOAD!!!
-  //TODO: Make sure periods change correctly, because it doesn't seem like they are.
   render() {
     const VARIATION_COLOR = '#00BFFF';
 
@@ -109,11 +106,11 @@ export default React.createClass({
                 'marginBottom': '8px',
                 'color': bell.variations.indexOf('title') < 0 ? null : VARIATION_COLOR
               }}>{bell.title}</div>
-              {bell.teacher? <div style={{
+              <div style={{
                 'fontSize': '0.8em'
               }}>with <span style={{
                 'color': bell.variations.indexOf('teacher') < 0 ? null : VARIATION_COLOR
-              }}>{bell.teacher || 'no one'}</span></div> :null}
+              }}>{bell.teacher || 'no one'}</span></div>
             </div>
             <div style={{
                 'fontSize': '1.5em',

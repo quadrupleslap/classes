@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 
 export default React.createClass({
   propTypes: {
@@ -16,7 +17,7 @@ export default React.createClass({
   fetchMaxHeight() {
     this.setState({
       maxHeight:
-        (this.state.expanded ? React.findDOMNode(this.refs.content).scrollHeight : 0) + 'px'
+        (this.state.expanded ? ReactDOM.findDOMNode(this.refs.content).scrollHeight : 0) + 'px'
     });
   },
 

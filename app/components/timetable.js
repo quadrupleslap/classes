@@ -1,12 +1,11 @@
 import React from 'react';
 
 import SBHSStore from '../stores/sbhs';
+
 import Centered from './centered';
+import SBHSException from './sbhs-exception';
 import Loader from './loader';
 import Expandable from './expandable';
-
-const WEEKS = ['A', 'B', 'C'];
-const MS_TO_WEEKS = 1/(1000 * 60 * 60 * 24 * 7);
 
 export default React.createClass({
   getInitialState() {
@@ -14,11 +13,8 @@ export default React.createClass({
     if (SBHSStore.today && SBHSStore.today.day) {
       let components = SBHSStore.today.day.split(' ');
       weekday = components[0];
-      // Test this.
-      week = WEEKS[(WEEKS.indexOf(components[1]) + Math.floor(Date.now() * MS_TO_WEEKS) - Math.floor(SBHSStore.today.date * MS_TO_WEEKS)) % 3];
+      week = components[1];
     }
-
-    //TODO: Loader and login request message and stuff liek that.
 
     return {
       days: null,
@@ -28,10 +24,9 @@ export default React.createClass({
   },
 
   getData() {
-    if (SBHSStore.timetable)
-      this.setState({
-        days: SBHSStore.timetable.days
-      });
+    this.setState({
+      days: (SBHSStore.timetable || {}).days
+    });
   },
 
   componentWillMount() {
@@ -45,7 +40,12 @@ export default React.createClass({
 
   render() {
     if (!this.state.days)
-      return <Centered vertical horizontal><Loader /></Centered>;
+      return <Centered vertical horizontal>
+        <SBHSException
+          loading={<Loader />}
+          loggedOut='Login to load your timetable!'
+          offline='Go online to load your timetable!' />
+      </Centered>;
 
     let day = this.state.weekday + ' ' + this.state.week, periods;
     if (this.state.days)

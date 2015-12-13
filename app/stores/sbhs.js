@@ -1,11 +1,16 @@
 import Emitter from '../utilities/emitter';
-import {get, jsonp} from '../utilities/request';
+import {get} from '../utilities/request';
 import parseTime from '../utilities/parse-time';
 
 import defaultBells from '../data/default-bells';
 
+import TermsStore from './terms';
+
 let localStorage = window['localStorage'];
-let alert = window['alert'];
+
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const WEEKS = ['A', 'B', 'C'];
+const MS_TO_WEEKS = 1/(1000 * 60 * 60 * 24 * 7);
 
 //TODO: Take online/offline status into account.
 class SBHSStore extends Emitter {
@@ -42,7 +47,35 @@ class SBHSStore extends Emitter {
       this._fetchNotices();
     }, 15 * 60 * 1000); // 15 minutes.
 
+    TermsStore.bind('terms', () => {
+      if (this.today && this.today.date == null)
+        this.today.date = this._defaultDay();
+    });
+
     this._fetchToken();
+  }
+
+  _defaultDay(date) {
+    if (TermsStore.terms) {
+      let terms = TermsStore.terms;
+
+      let state = null;
+      for (var i = terms.length; i--;) {
+        if (terms[i].start > date) {
+          break;
+        } else if (terms[i].end > date) {
+          state = WEEKS[(Math.floor(date * MS_TO_WEEKS) - Math.floor(terms[i].start * MS_TO_WEEKS) + terms[i].offset) % 3];
+          break;
+        }
+      }
+
+      if (state == null)
+        return null;
+
+      return `${WEEKDAYS[date.getDay()]} ${state}`;
+    } else {
+      return null;
+    }
   }
 
   clearCache() {
@@ -52,9 +85,11 @@ class SBHSStore extends Emitter {
   }
 
   _defaultToday() {
+    let date = new Date();
+    date.setUTCHours(0, 0, 0, 0);
+
     let today = {
-      date: new Date(),
-      day: null,
+      date: date,
       finalized: false
     };
 
@@ -69,6 +104,8 @@ class SBHSStore extends Emitter {
 
       today.date.setTime(today.date.getTime() + (1 * 24 * 60 * 60 * 1000));
     }
+
+    today.day = this._defaultDay(today.date);
 
     today.bells = bells.map(bell => {
       return {
@@ -199,6 +236,13 @@ class SBHSStore extends Emitter {
 
         let data = JSON.parse(objectString);
 
+        //TODO: Remove this when they fix the API.
+        data['notices'] = data['notices'].map(notice => {
+          notice['isMeeting'] = parseInt(notice['isMeeting']);
+          notice['relativeWeight'] = parseInt(notice['relativeWeight']);
+          return notice;
+        });
+
         this.notices = {
           date: new Date(data['dayInfo']['date']),
           notices: data['notices'].sort((a, b) => (b['relativeWeight'] + b['isMeeting']) - (a['relativeWeight'] + a['isMeeting'])).map(notice => {
@@ -210,8 +254,8 @@ class SBHSStore extends Emitter {
               target: notice['displayYears'],
               targetList: notice['years'],
 
-              meeting: notice['isMeeting']? {
-                date: new Date(notice['meetingDate']),
+              meeting: notice['isMeeting'] ? {
+                date: +(new Date(notice['meetingDate'])),
                 time: notice['meetingTime']
               } :null
             };

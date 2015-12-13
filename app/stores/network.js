@@ -4,12 +4,12 @@ class NetworkStore extends Emitter {
   constructor() {
     super();
     this.online = window['navigator']['onLine'];
-    window.addEventListener('online', () => this._fetchStatus());
-    window.addEventListener('offline', () => this._fetchStatus());
+    window.addEventListener('online', () => window['location']['reload']());
+    window.addEventListener('offline', () => this._goOffline());
   }
 
-  _fetchStatus() {
-    this.online = window['navigator']['onLine'];
+  _goOffline() {
+    this.online = false;
     this.trigger('online');
   }
 }
