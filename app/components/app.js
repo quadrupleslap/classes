@@ -3,6 +3,7 @@ import React from 'react';
 import Today from './today';
 import Timetable from './timetable';
 import Notices from './notices';
+import Settings from './settings';
 
 import AuthButton from './auth-button';
 import Tabs from './tabs';
@@ -16,8 +17,7 @@ export default React.createClass({
       {button: icon('timer'), content: <Today />},
       {button: icon('calendar'), content: <Timetable />},
       {button: icon('news'), content: <Notices />},
-      //TODO: SETTINGS YOU IDIOT.
-      {button: icon('settings'), content: 'Bow down to our lord and saviour the Helix!'},
+      {button: icon('settings'), content: <Settings />},
       {},
       {button: <AuthButton />}];
 
