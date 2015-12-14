@@ -4,13 +4,14 @@ import ReactDOM from 'react-dom';
 export default React.createClass({
   propTypes: {
     title: PropTypes.node.isRequired,
-    content: PropTypes.node.isRequired
+    content: PropTypes.node.isRequired,
+    initiallyExpanded: PropTypes.bool
   },
 
   getInitialState() {
     return {
-      expanded: false,
-      maxHeight: '0px' // none if expanded.
+      expanded: !!this.props.initiallyExpanded,
+      maxHeight: 'none'
     };
   },
 
@@ -21,13 +22,17 @@ export default React.createClass({
     });
   },
 
+  componentDidMount() {
+    this.fetchMaxHeight();
+  },
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.expanded != this.state.expanded)
       this.fetchMaxHeight();
   },
 
   render() {
-    let {title, content, ...rest} = this.props;
+    let {title, content, initiallyExpanded, ...rest} = this.props;
 
     return <div {...rest}>
       <div onClick={() => this.setState({ expanded: !this.state.expanded })}>{title}</div>

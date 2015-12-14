@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SBHSStore from '../stores/sbhs';
+import SettingsStore from '../stores/settings';
 
 import SBHSException from './sbhs-exception';
 import Centered from './centered';
@@ -17,6 +18,9 @@ export default React.createClass({
     return {
       notices: null,
       date: null,
+
+      initiallyExpanded: SettingsStore.expandNotices,
+      filter: SettingsStore.noticesFilter
     };
   },
 
@@ -29,13 +33,23 @@ export default React.createClass({
     }
   },
 
+  getSettings() {
+    this.setState({
+      initiallyExpanded: SettingsStore.expandNotices,
+      filter: SettingsStore.noticesFilter
+    });
+  },
+
   componentWillMount() {
     SBHSStore.bind('notices', this.getData);
     this.getData();
+
+    SettingsStore.bind('update', this.getSettings);
   },
 
   componentWillUnmount() {
     SBHSStore.unbind('notices', this.getData);
+    SettingsStore.unbind('update', this.getSettings);
   },
 
   render() {
@@ -46,6 +60,11 @@ export default React.createClass({
           loggedOut='Login to read the notices!'
           offline='Go online to read the notices!' />
       </Centered>;
+
+
+    let notices = this.state.notices;
+    if (this.state.filter)
+      notices = notices.filter(notice => notice.targetList.indexOf(this.state.filter) != -1);
 
     return <Centered horizontal><div style={{
         'width': 'calc(100% - 16px)',
@@ -58,7 +77,7 @@ export default React.createClass({
         'background': '#fff',
         'boxShadow': '0 2px 5px rgba(0,0,0,0.26)'
       }}>
-        {this.state.notices.map((notice, i) => {
+        {notices.map((notice, i) => {
           let meeting;
 
           if (notice.meeting) {
@@ -71,7 +90,7 @@ export default React.createClass({
           }
 
           return <Expandable
-            style={{ 'padding': '1em', borderBottom: i != this.state.notices.length - 1 ? '1px solid #CCC' : null }}
+            style={{ 'padding': '1em', borderBottom: i != notices.length - 1 ? '1px solid #CCC' : null }}
             key={i}
             title={<div>
               <div style={{ 'fontSize': '1.2em' }}>
@@ -80,7 +99,8 @@ export default React.createClass({
               </div>
               <div style={{ 'fontSize': '0.8em', 'color': '#757575' }}>{ notice.author } | { notice.target }</div>
             </div>}
-            content={<div dangerouslySetInnerHTML={{ __html: notice.content }} />} />
+            content={<div dangerouslySetInnerHTML={{ __html: notice.content }} />}
+            initiallyExpanded={this.state.initiallyExpanded} />
         })}
       </div></Centered>;
   }
