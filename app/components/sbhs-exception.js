@@ -12,10 +12,10 @@ export default React.createClass({
   },
 
   update() {
-    return {
+    this.setState({
       offline: !NetworkStore.online,
       loggedOut: SBHSStore.state == SBHSStore.LOGGED_OUT
-    };
+    });
   },
 
   componentWillMount() {
