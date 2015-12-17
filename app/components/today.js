@@ -76,7 +76,7 @@ export default React.createClass({
         <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> <span style={{ 'fontSize': '1em' }}>in</span>
         <Countdown
           to={nextTime}
-          style={{ 'fontSize': '5em', 'fontWeight': '100' }}
+          style={{ 'fontSize': '5em', 'fontWeight': '100;' }}
           onComplete={this.getNext} />
       </div> : <Loader />}
 
