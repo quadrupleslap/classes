@@ -17,6 +17,7 @@ var plugins = [
       cache: fs.readdirSync('public/fonts')
         .filter(f => f[0] != '.')
         .map(f => 'fonts/' + f)
+        .concat(['main.css'])
     })
   ];
 

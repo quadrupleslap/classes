@@ -6,6 +6,7 @@ app.js
 CACHE:
 fonts/roboto-light.woff
 fonts/roboto-thin.woff
+main.css
 
 NETWORK:
 *
