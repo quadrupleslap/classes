@@ -2,9 +2,8 @@
   position: absolute;
   height: 100%; width: 100%;
   border-radius: 8px;
-  opacity: 0.5;
   transition: background-color linear .08s;
-  background-color: #000000;
+  background-color: #7F7F7F;
 }
 
 .head {
@@ -12,16 +11,17 @@
   top: -3px;
   height: 20px; width: 20px;
   border-radius: 50%;
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.6);
+  border: 1px solid #7F7F7F;
   transition: transform linear .08s, background-color linear .08s;
   background-color: #FAFAFA;
 }
 
 .enabled .track {
-  background-color: #00BFFF;
+  background-color: #80DFFF;
 }
 
 .enabled .head {
   background-color: #00BFFF;
+  border: 1px solid #80DFFF;
   transform: translateX(16px);
 }

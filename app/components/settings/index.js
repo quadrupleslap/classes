@@ -51,7 +51,7 @@ export default React.createClass({
         <option value='12'>Year 12</option>
         <option value='Staff'>Staff</option>
       </select>
-      <button onClick={this.clearAllData}>Clear All Data</button>
+      <div className={STYLE.dangerButton} onClick={this.clearAllData}>Clear All Data</div>
     </Centered>;
   }
 });
