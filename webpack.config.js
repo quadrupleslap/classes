@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var ClosureCompilerPlugin = require('webpack-closure-compiler');
 var AppCachePlugin = require('appcache-webpack-plugin');
+var fs = require('fs');
 
 var plugins = [
     new webpack.DefinePlugin({
@@ -11,7 +12,12 @@ var plugins = [
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(false),
-    new AppCachePlugin({ output: 'main.appcache' })
+    new AppCachePlugin({
+      output: 'main.appcache',
+      cache: fs.readdirSync('public/fonts')
+        .filter(f => f[0] != '.')
+        .map(f => 'fonts/' + f)
+    })
   ];
 
 if (process.env.NODE_ENV != 'development')

@@ -1,7 +1,11 @@
 CACHE MANIFEST
-# 534ddc58223581c7901e
+# 89f7905b8cd92f582bc6
 
 app.js
+
+CACHE:
+fonts/roboto-light.woff
+fonts/roboto-thin.woff
 
 NETWORK:
 *
