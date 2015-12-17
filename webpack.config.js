@@ -37,7 +37,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.css$/,
-      loader: 'style!css?modules&camelcase!postcss'
+      loader: 'style!css?modules&camelcase&localIdentName=[sha1:hash:base64:4]!postcss'
     }, {
       test: /\.js$/,
       exclude: /node_modules/,

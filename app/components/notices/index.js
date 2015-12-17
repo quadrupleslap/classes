@@ -67,7 +67,6 @@ export default React.createClass({
     if (this.state.filter)
       notices = notices.filter(notice => notice.targetList.indexOf(this.state.filter) != -1);
 
-    //TODO: Externalise styles.
     return <Centered horizontal><div className={STYLE.notices}>
         {notices.map((notice, i) => {
           let meeting;

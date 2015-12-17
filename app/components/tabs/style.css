@@ -25,3 +25,7 @@
   left: 4em; right: 0;
   overflow: auto;
 }
+
+.divider {
+  flex-grow: 1;
+}

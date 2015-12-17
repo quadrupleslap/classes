@@ -1,0 +1,33 @@
+.today {
+  width: calc(100% - 16px);
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+  margin: 8px;
+  background: #FFF;
+  box-sizing: border-box;
+}
+
+.period {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.period:not(:last-child) {
+  border-bottom: 1px solid #CCC;
+}
+
+.next {
+  width: 100%;
+  text-align: center;
+  padding: 1em 0;
+  color: #000;
+}
+
+.countdown {
+  font-size: 5em;
+  font-weight: 100;
+}

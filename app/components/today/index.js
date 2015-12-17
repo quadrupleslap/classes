@@ -1,12 +1,16 @@
 import React from 'react';
 
-import SBHSStore from '../stores/sbhs';
-import Centered from './centered';
-import Countdown from './countdown';
-import Icon from './icon';
-import Loader from './loader';
+import SBHSStore from '../../stores/sbhs';
+import Centered from '../centered';
+import Countdown from '../countdown';
+import Icon from '../icon';
+import Loader from '../loader';
 
-import parseTime from '../utilities/parse-time';
+import parseTime from '../../utilities/parse-time';
+
+import STYLE from './style.css';
+
+const VARIATION_COLOR = '#00BFFF';
 
 export default React.createClass({
   getInitialState() {
@@ -66,38 +70,20 @@ export default React.createClass({
   },
 
   render() {
-    const VARIATION_COLOR = '#00BFFF';
-
     let {periods, nextBell, nextTime} = this.state;
 
-    //TODO: Externalise styles.
     return <Centered vertical horizontal>
-      {nextBell? <div style={{ 'width': '100%', 'textAlign': 'center', 'padding': '1em 0', 'color': '#000' }}>
-        <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> <span style={{ 'fontSize': '1em' }}>in</span>
+      {nextBell? <div className={STYLE.next}>
+        <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> in
         <Countdown
           to={nextTime}
-          style={{ 'fontSize': '5em', 'fontWeight': '100;' }}
+          className={STYLE.countdown}
           onComplete={this.getNext} />
       </div> : <Loader />}
 
-      {periods.length? <div style={{
-        'width': 'calc(100% - 16px)',
-        'maxWidth': '360px',
-        'display': 'flex',
-        'flexDirection': 'column',
-        'boxShadow': '0 2px 5px rgba(0,0,0,0.26)',
-        'margin': '8px',
-        'background': '#FFF',
-        'boxSizing': 'border-box'
-      }}>
+      {periods.length? <div className={STYLE.today}>
         {periods.map((bell, i) =>
-          <div key={i} style={{
-            'display': 'flex',
-            'justifyContent': 'space-between',
-            'alignItems': 'center',
-            'borderBottom': i != periods.length - 1 ? '1px solid #CCC' : null,
-            'padding': '16px'
-          }}>
+          <div key={i} className={STYLE.period}>
             <div>
               <div style={{
                 'fontSize': '1.2em',

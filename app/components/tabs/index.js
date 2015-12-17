@@ -9,7 +9,7 @@ export default React.createClass({
   render() {
     let buttons = this.props.tabs.map((tab, i) => {
       if (!this.props.tabs[i].button) // Assume it's a divider.
-        return <li key={i} style={{ 'flexGrow': '1;' }} />; //HACK: ; required for unitless values
+        return <li key={i} className={STYLE.divider} />;
 
       return <li
           key={i}

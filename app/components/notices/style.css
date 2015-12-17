@@ -14,6 +14,6 @@
   padding: 1em;
 }
 
-.notice:last-child {
+.notice:not(:last-child) {
   border-bottom: 1px solid #CCC;
 }
