@@ -1,9 +1,12 @@
+$select-padding: 4px;
+
 .select {
-  margin: 0;
-  height: 34px;
-  background-color: #FFF;
+  appearance: none;
+  padding: $select-padding;
+  height: 32px;
   border: 1px solid #CCC;
   border-radius: 4px;
   outline: none;
   width: 128px;
+  background: #FFF svg-load(arrow.svg) no-repeat right $select-padding center / 10px;
 }
