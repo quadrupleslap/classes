@@ -1,9 +1,4 @@
-import React, {PropTypes} from 'react';
-
-let style = document.createElement('style');
-
-style.innerText =
-`.__loader__ {
+.loader {
   width: 60px;
   height: 60px;
   margin: 60px;
@@ -28,12 +23,4 @@ style.innerText =
   50%  { background-color: #2E74F6; }
   75%  { background-color: #DA4431; }
   100% { background-color: #45E185; }
-}`;
-
-document.head.appendChild(style);
-
-export default React.createClass({
-  render() {
-    return <div className="__loader__" {...this.props}></div>;
-  }
-});
+}

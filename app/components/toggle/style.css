@@ -1,0 +1,27 @@
+.track {
+  position: absolute;
+  height: 100%; width: 100%;
+  border-radius: 8px;
+  opacity: 0.5;
+  transition: background-color linear .08s;
+  background-color: #000000;
+}
+
+.head {
+  position: absolute;
+  top: -3px;
+  height: 20px; width: 20px;
+  border-radius: 50%;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.6);
+  transition: transform linear .08s, background-color linear .08s;
+  background-color: #FAFAFA;
+}
+
+.enabled .track {
+  background-color: #00BFFF;
+}
+
+.enabled .head {
+  background-color: #00BFFF;
+  transform: translateX(16px);
+}

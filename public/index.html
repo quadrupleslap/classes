@@ -14,20 +14,21 @@
     <link rel="apple-touch-icon" sizes="192x192" href="ios-icon.png">
 
     <style>
-      html, body { height: 100%; width: 100%; }
+      html, body, #app {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+      }
 
-      body {
+      #app {
         font-family: 'Helvetica Neue', 'Roboto', 'Segoe UI', sans-serif;
         font-size: 16px;
         color: #212121;
-
-        margin: 0;
-
-        background-color: #eee;
+        background: #FFF;
       }
 
       @media (max-width: 768px) {
-        body { font-size: 12px; }
+        #app { font-size: 12px; }
       }
     </style>
   </head>

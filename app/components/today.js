@@ -16,9 +16,7 @@ export default React.createClass({
       date: null,
 
       nextTime: null,
-      nextBell: null,
-
-      timeout: null
+      nextBell: null
     };
   },
 
@@ -28,11 +26,11 @@ export default React.createClass({
         bells: SBHSStore.today.bells,
         periods: SBHSStore.today.bells.filter(bell => bell.room),
         date: SBHSStore.today.date
-      });
+      }, this.getNext);
     }
   },
 
-  loop() {
+  getNext() {
     let bells = this.state.bells;
 
     if (bells) {
@@ -46,29 +44,25 @@ export default React.createClass({
         if (date > now) {
           return this.setState({
             nextBell: bell,
-            nextTime: date,
-            timeout: setTimeout(this.loop, date - now)
+            nextTime: date
           });
         }
       }
     }
 
     this.setState({
-      nextTime: null,
       nextBell: null,
-      timeout: setTimeout(this.loop, 100)
+      nextTime: null
     });
   },
 
   componentWillMount() {
     SBHSStore.bind('today', this.getData);
     this.getData();
-    this.loop();
   },
 
   componentWillUnmount() {
     SBHSStore.unbind('today', this.getData);
-    window.clearTimeout(this.state.timeout);
   },
 
   render() {
@@ -76,10 +70,14 @@ export default React.createClass({
 
     let {periods, nextBell, nextTime} = this.state;
 
+    //TODO: Externalise styles.
     return <Centered vertical horizontal>
-      {nextBell? <div style={{ 'background': 'rgba(255,255,255,0.3)', 'width': '100%', 'textAlign': 'center', 'padding': '1em 0', 'color': '#000' }}>
+      {nextBell? <div style={{ 'width': '100%', 'textAlign': 'center', 'padding': '1em 0', 'color': '#000' }}>
         <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> <span style={{ 'fontSize': '1em' }}>in</span>
-        <Countdown to={nextTime} style={{ 'fontSize': '5em', 'fontWeight': '300' }} />
+        <Countdown
+          to={nextTime}
+          style={{ 'fontSize': '5em', 'fontWeight': '100' }}
+          onComplete={this.getNext} />
       </div> : <Loader />}
 
       {periods.length? <div style={{

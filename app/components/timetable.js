@@ -56,6 +56,7 @@ export default React.createClass({
         }
       }
 
+    //TODO: Externalise styles.
     return <Centered horizontal vertical>
       <div style={{
           'width': 'calc(100% - 16px)',
@@ -111,7 +112,7 @@ export default React.createClass({
             'padding': '16px'
           }}>
             <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#AAA' }}>Free</em> }</div>
-            <div style={{ 'fontSize': '1.5em' }}>{ period.room  || "" }</div>
+            <div style={{ 'fontSize': '1.5em' }}>{ period.room  || '' }</div>
           </div>;
         })}
       </div> :null}

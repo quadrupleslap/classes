@@ -1,15 +1,9 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 
 import SBHSStore from '../stores/sbhs';
 import NetworkStore from '../stores/network';
 
 export default React.createClass({
-  propTypes: {
-    offline: PropTypes.node.isRequired,
-    loggedOut: PropTypes.node.isRequired,
-    loading: PropTypes.node.isRequired
-  },
-
   getInitialState() {
     return {
       offline: !NetworkStore.online,

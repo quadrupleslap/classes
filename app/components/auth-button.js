@@ -33,7 +33,7 @@ export default React.createClass({
 
   render() {
     if (!this.state.online)
-      return <Icon style={{ 'margin': 'auto' }} icon="disconnected" />;
+      return <Icon style={{ 'margin': 'auto' }} icon='disconnected' />;
 
     switch (this.state.auth) {
       case SBHSStore.LOADING:
@@ -46,7 +46,7 @@ export default React.createClass({
       case SBHSStore.LOGGED_IN:
         return <Icon
           style={{ 'margin': 'auto' }}
-          icon="logout"
+          icon='logout'
           onClick={() => {
             SBHSStore.clearCache();
             window.location.href = '/auth/logout';
@@ -55,7 +55,7 @@ export default React.createClass({
       case SBHSStore.LOGGED_OUT:
         return <Icon
           style={{ 'margin': 'auto' }}
-          icon="login"
+          icon='login'
           onClick={() => {
             window.location.href = '/auth/login';
           }} />;

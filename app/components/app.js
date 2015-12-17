@@ -21,7 +21,7 @@ export default React.createClass({
       {},
       {button: <AuthButton />}];
 
-    return <Tabs tabs={tabs} buttonStyle={{ height: '4em' }} width='4em' />;
+    return <Tabs tabs={tabs} />;
   }
 });
 

@@ -14,12 +14,12 @@ export default class Emitter {
     this._events[event].splice(this._events[event].indexOf(fn), 1);
   }
 
-  trigger(event, ...args){
+  trigger(event){
     this._events = this._events || {};
 
     if (!(event in this._events))
       return;
 
-    this._events[event].forEach(fn => fn.apply(this, args));
+    this._events[event].forEach(fn => fn());
   }
 };

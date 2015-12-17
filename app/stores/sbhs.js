@@ -11,8 +11,9 @@ let localStorage = window['localStorage'];
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const WEEKS = ['A', 'B', 'C'];
 const MS_TO_WEEKS = 1/(1000 * 60 * 60 * 24 * 7);
+const THU2SUN = -1000 * 60 * 60 * 24 * 4;
 
-//TODO: Take online/offline status into account.
+//TODO: Use something more reliable than setTimeout and setInterval.
 class SBHSStore extends Emitter {
   constructor() {
     super();
@@ -35,6 +36,9 @@ class SBHSStore extends Emitter {
 
     this.bind('today', () => {
       window.setTimeout(() => {
+        this.today = this._defaultToday();
+        this.trigger('today');
+
         this._fetchToday();
         this._fetchNotices();
       }, parseTime(
@@ -64,7 +68,7 @@ class SBHSStore extends Emitter {
         if (terms[i].start > date) {
           break;
         } else if (terms[i].end > date) {
-          state = WEEKS[(Math.floor(date * MS_TO_WEEKS) - Math.floor(terms[i].start * MS_TO_WEEKS) + terms[i].offset) % 3];
+          state = WEEKS[(Math.floor(((+date) + THU2SUN) * MS_TO_WEEKS) - Math.floor((terms[i].start + THU2SUN) * MS_TO_WEEKS) + terms[i].offset) % 3];
           break;
         }
       }
@@ -151,7 +155,7 @@ class SBHSStore extends Emitter {
       get(`https://student.sbhs.net.au/api/timetable/daytimetable.json?&access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load day timetable. Error: ${err}. Data: ${objectString}`); //TODO: Snackbar.
-
+        console.log(`https://student.sbhs.net.au/api/timetable/daytimetable.json?&access_token=${encodeURIComponent(this.token)}`)
         let data = JSON.parse(objectString);
 
         let periods = data['timetable']['timetable']['periods'];
@@ -195,13 +199,18 @@ class SBHSStore extends Emitter {
           }
         }
 
-        this.today = {
+        let today = {
           date: new Date(data['date']),
           bells: bells,
           day: data['timetable']['timetable']['dayname'],
           finalized: data['shouldDisplayVariations']
         };
 
+        //TODO: Snackbar.
+        if (parseTime(new Date(today.date), today.bells[today.bells.length - 1].time) < Date.now())
+          return console.error('Dear lord I think we\'ve travelled through time!');
+
+        this.today = today;
         this.trigger('today');
       });
     } else {
@@ -211,7 +220,7 @@ class SBHSStore extends Emitter {
 
         let data = JSON.parse(objectString);
 
-        this.today = {
+        let today = {
           date: new Date(data['date']),
           bells: data['bells'].map(bell => {
             return {
@@ -223,6 +232,11 @@ class SBHSStore extends Emitter {
           day: data['day'] + ' ' + data['weekType']
         };
 
+        //TODO: Snackbar.
+        if (parseTime(new Date(today.date), today.bells[today.bells.length - 1].time) < Date.now())
+          return console.error('Dear lord I think we\'ve travelled through time!');
+
+        this.today = today;
         this.trigger('today');
       });
     }
@@ -317,6 +331,12 @@ class SBHSStore extends Emitter {
                   for (j = subjects.length; j--;)
                     if (abbr === subjects[j].abbr)
                       break;
+
+                  //TODO: Remove this when they fix the API for accelerants.
+                  let subject = subjects[j] || {
+                      title: abbr,
+                      teacher: rawPeriod['teacher']
+                    };
 
                   periods.push({
                     title: subjects[j].title,

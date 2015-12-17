@@ -1,13 +1,7 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 export default React.createClass({
-  propTypes: {
-    title: PropTypes.node.isRequired,
-    content: PropTypes.node.isRequired,
-    initiallyExpanded: PropTypes.bool
-  },
-
   getInitialState() {
     return {
       expanded: !!this.props.initiallyExpanded,
@@ -32,11 +26,11 @@ export default React.createClass({
   },
 
   render() {
-    let {title, content, initiallyExpanded, ...rest} = this.props;
+    let {title, content, initiallyExpanded} = this.props;
 
-    return <div {...rest}>
+    return <div {...this.props}>
       <div onClick={() => this.setState({ expanded: !this.state.expanded })}>{title}</div>
-      <div ref="content" style={{
+      <div ref='content' style={{
         'transition': 'max-height .3s ease',
         'maxHeight': this.state.maxHeight,
         'overflow': 'hidden'

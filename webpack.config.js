@@ -11,9 +11,7 @@ var plugins = [
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(false),
-    new AppCachePlugin({
-      output: 'main.appcache'
-    })
+    new AppCachePlugin({ output: 'main.appcache' })
   ];
 
 if (process.env.NODE_ENV != 'development')
@@ -31,12 +29,26 @@ module.exports = {
 
   module: {
     loaders: [{
+      test: /\.css$/,
+      loader: 'style!css?modules&camelcase!postcss'
+    }, {
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'babel',
-      query: {
-        loose: 'all'
-      }
+      loader: 'babel?loose=all'
     }]
+  },
+
+  postcss: function () {
+    var autoprefixer = require('autoprefixer'),
+        precss = require('precss'),
+        inlinesvg = require('postcss-inline-svg'),
+        cssnano = require('cssnano');
+
+    return [
+        precss(),
+        inlinesvg(),
+        autoprefixer({ browsers: ['last 1 version'] }),
+        cssnano()
+      ];
   }
 };

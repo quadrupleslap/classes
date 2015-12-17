@@ -1,10 +1,11 @@
 import React from 'react';
 
-import Centered from './centered';
-import Toggle from './toggle';
-import Select from './select';
+import Centered from '../centered';
+import Toggle from '../toggle';
 
-import SettingsStore from '../stores/settings';
+import SettingsStore from '../../stores/settings';
+
+import STYLE from './style.css';
 
 export default React.createClass({
   getInitialState() {
@@ -21,6 +22,11 @@ export default React.createClass({
     });
   },
 
+  clearAllData() {
+    window['localStorage']['clear']();
+    window['location']['reload']();
+  },
+
   componentDidMount() {
     SettingsStore.bind('update', this.update);
   },
@@ -31,24 +37,21 @@ export default React.createClass({
 
   render() {
     return <Centered vertical horizontal>
-      <p>Coming soon (like in the next few days)!</p>
-      <p>Meanwhile, you can click this toggle button (which took ages to make):</p>
       <Toggle enabled={this.state.expandNotices} onChange={(newState) => SettingsStore.update({ expandNotices: newState })} />
-      <br />
-      <Select
+      <select
         onChange={e => SettingsStore.update({ noticesFilter: e.target.value || null })}
         value={this.state.noticesFilter}
-        style={{ 'width': 128 }}
-        items={[
-          { label: 'All Years', value: '' },
-          { label: 'Year 7',  value: '7' },
-          { label: 'Year 8',  value: '8' },
-          { label: 'Year 9',  value: '9' },
-          { label: 'Year 10', value: '10' },
-          { label: 'Year 11', value: '11' },
-          { label: 'Year 12', value: '12' },
-          { label: 'Staff', value: 'Staff' }
-        ]} />
+        className={STYLE.select} >
+        <option value=''>All Years</option>
+        <option value='7'>Year 7</option>
+        <option value='8'>Year 8</option>
+        <option value='9'>Year 9</option>
+        <option value='10'>Year 10</option>
+        <option value='11'>Year 11</option>
+        <option value='12'>Year 12</option>
+        <option value='Staff'>Staff</option>
+      </select>
+      <button onClick={this.clearAllData}>Clear All Data</button>
     </Centered>;
   }
 });
