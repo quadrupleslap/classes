@@ -13,8 +13,8 @@ $select-padding: 8px;
 }
 
 .danger-button {
-  background-color: #ed5565;
-  border-color: #ed5565;
+  background-color: #ED5565;
+  border-color: #ED5565;
   color: #FFFFFF;
   display: inline-block;
   padding: 6px 12px;
@@ -22,6 +22,6 @@ $select-padding: 8px;
 }
 
 .danger-button:hover {
-  background-color: #ec4758;
-  border-color: #ec4758;
+  background-color: #EC4758;
+  border-color: #EC4758;
 }

@@ -64,10 +64,10 @@ class SBHSStore extends Emitter {
       let terms = TermsStore.terms;
 
       let state = null;
-      for (var i = terms.length; i--;) {
+      for (var i = 0; i < terms.length; i++) {
         if (terms[i].start > date) {
           break;
-        } else if (terms[i].end > date) {
+        } else if (terms[i].end >= date) {
           state = WEEKS[(Math.floor(((+date) + THU2SUN) * MS_TO_WEEKS) - Math.floor((terms[i].start + THU2SUN) * MS_TO_WEEKS) + terms[i].offset) % 3];
           break;
         }
@@ -155,7 +155,7 @@ class SBHSStore extends Emitter {
       get(`https://student.sbhs.net.au/api/timetable/daytimetable.json?&access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load day timetable. Error: ${err}. Data: ${objectString}`); //TODO: Snackbar.
-        console.log(`https://student.sbhs.net.au/api/timetable/daytimetable.json?&access_token=${encodeURIComponent(this.token)}`)
+
         let data = JSON.parse(objectString);
 
         let periods = data['timetable']['timetable']['periods'];
