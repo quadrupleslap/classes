@@ -7,7 +7,7 @@
   flex-flow: column nowrap;
   overflow-y: auto;
   height: 100%; width: 4em;
-  position: absolute;
+  position: fixed;
 }
 
 .button {

@@ -27,8 +27,8 @@ export default React.createClass({
     this.setState({
       text: numbers.map(n => {
         let s = n.toString();
-        let zeroes = 3 - s.length;
-        return Array(zeroes > 0 && zeroes).join('0') + s;
+        let zeroes = Math.max(3 - s.length, 0);
+        return Array(zeroes).join('0') + s;
       }).join(':'),
       timeoutID: setTimeout(this.tick, 1000)
     });

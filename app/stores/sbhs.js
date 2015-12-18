@@ -101,15 +101,28 @@ class SBHSStore extends Emitter {
     while (true) {
       bells = defaultBells(today.date);
 
-      if (bells.length > 0) {
+      if (bells.length > 0)
         if (parseTime(new Date(today.date), bells[bells.length - 1].time) > Date.now())
           break;
-      }
 
-      today.date.setTime(today.date.getTime() + (1 * 24 * 60 * 60 * 1000));
+      today.date.setTime(today.date.getTime() + (24 * 60 * 60 * 1000));
     }
 
-    today.day = this._defaultDay(today.date);
+    let day = this._defaultDay(today.date);
+    if (!day) {
+      let terms = TermsStore.terms,
+        now = Date.now();
+
+      for (var i = 0; i < terms.length; i++) {
+        if (terms[i].start >= now) {
+          today.date = new Date(terms[i].start);
+          day = this._defaultDay(today.date);
+          break
+        }
+      }
+    }
+
+    this.day = day;
 
     today.bells = bells.map(bell => {
       return {
