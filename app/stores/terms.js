@@ -24,17 +24,22 @@ class TermsStore extends Emitter {
   constructor() {
     super();
 
-    this.terms = null;
-    if (localStorage.terms) {
-      let terms = JSON.parse(localStorage.terms);
+    //TODO: Remove when update rates are high enough.
+    try {
+      this.terms = null;
+      if (localStorage.terms) {
+        let terms = JSON.parse(localStorage.terms);
 
-      let lastDay = new Date(terms[terms.length - 1].end);
-      lastDay.setHours(15, 15);
+        let lastDay = new Date(terms[terms.length - 1].end);
+        lastDay.setHours(15, 15);
 
-      if (lastDay > Date.now()) {
-        this.terms = terms;
-        return;
+        if (lastDay > Date.now()) {
+          this.terms = terms;
+          return;
+        }
       }
+    } catch (e) {
+      console.error('Old terms cache.');
     }
 
     this.fetch();
