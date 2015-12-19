@@ -10,8 +10,7 @@ import Expandable from '../expandable';
 
 import STYLE from './style.css';
 
-//TODO: What if notices is outdated? Huh...
-//TODO: No notices.
+//TODO: What if notices is outdated?
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export default React.createClass({
@@ -66,6 +65,11 @@ export default React.createClass({
     let notices = this.state.notices;
     if (this.state.filter)
       notices = notices.filter(notice => notice.targetList.indexOf(this.state.filter) != -1);
+
+    if (notices.length == 0)
+      return <Centered vertical horizontal>
+        No notices.
+      </Centered>;
 
     return <Centered horizontal><div className={STYLE.notices}>
         {notices.map((notice, i) => {

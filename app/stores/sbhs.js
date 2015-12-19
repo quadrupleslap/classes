@@ -4,6 +4,8 @@ import parseTime from '../utilities/parse-time';
 
 import defaultBells from '../data/default-bells';
 
+import Timer from '../utilities/timer';
+
 import TermsStore from './terms';
 
 let localStorage = window['localStorage'];
@@ -13,7 +15,6 @@ const WEEKS = ['A', 'B', 'C'];
 const MS_TO_WEEKS = 1/(1000 * 60 * 60 * 24 * 7);
 const THU2SUN = -1000 * 60 * 60 * 24 * 4;
 
-//TODO: Use something more reliable than setTimeout and setInterval.
 class SBHSStore extends Emitter {
   constructor() {
     super();
@@ -35,25 +36,25 @@ class SBHSStore extends Emitter {
     });
 
     this.bind('today', () => {
-      window.setTimeout(() => {
+      Timer(() => {
         this.today = this._defaultToday();
         this.trigger('today');
 
         this._fetchToday();
         this._fetchNotices();
-      }, parseTime(
-        new Date(this.today.date),
-        this.today.bells[this.today.bells.length - 1].time) - Date.now());
+      }, parseTime(new Date(this.today.date), this.today.bells[this.today.bells.length - 1].time));
     });
 
-    window.setInterval(() => {
+    setInterval(() => {
       this._fetchToday();
       this._fetchNotices();
     }, 15 * 60 * 1000); // 15 minutes.
 
     TermsStore.bind('terms', () => {
-      if (this.today && this.today.date == null)
-        this.today.date = this._defaultDay();
+      if (this.today && this.today.default) {
+        this.today = this._defaultToday();
+        this.trigger('today');
+      }
     });
 
     this._fetchToken();
@@ -94,7 +95,8 @@ class SBHSStore extends Emitter {
 
     let today = {
       date: date,
-      finalized: false
+      finalized: false,
+      default: true
     };
 
     let bells;
@@ -109,7 +111,7 @@ class SBHSStore extends Emitter {
     }
 
     let day = this._defaultDay(today.date);
-    if (!day) {
+    if (!day && TermsStore.terms) {
       let terms = TermsStore.terms,
         now = Date.now();
 
@@ -139,9 +141,7 @@ class SBHSStore extends Emitter {
     let done = (data) => {
       this.state = this.LOGGED_IN;
       this.token = data['accessToken'];
-      window.setTimeout(
-        () => this._fetchToken(),
-        data['expires'] - Date.now());
+      Timer(() => this._fetchToken(), data['expires']);
       this.trigger('token');
     };
 

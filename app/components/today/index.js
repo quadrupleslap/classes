@@ -73,7 +73,7 @@ export default React.createClass({
     let {periods, nextBell, nextTime} = this.state;
 
     return <Centered vertical horizontal>
-      {nextBell? <div className={STYLE.next}>
+      {nextBell? <div className={STYLE.next} style={{ 'fontSize': periods.length? '1em' : '3vw' }}>
         <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> in
         <Countdown
           to={nextTime}
