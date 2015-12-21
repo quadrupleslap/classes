@@ -164,7 +164,7 @@ class SBHSStore extends Emitter {
 
   _fetchToday() {
     if (this.token) {
-      get(`https://student.sbhs.net.au/api/timetable/daytimetable.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
+      get(`https://student.sbhs.net.au/api/timetable/daytimetable.json?date=2016-01-27&access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load day timetable. Error: ${err}. Data: ${objectString}`); //TODO: Snackbar.
 
@@ -219,8 +219,8 @@ class SBHSStore extends Emitter {
         };
 
         //TODO: Snackbar.
-        if (parseTime(new Date(today.date), today.bells[today.bells.length - 1].time) < Date.now())
-          return console.error('Dear lord I think we\'ve travelled through time!');
+        // if (parseTime(new Date(today.date), today.bells[today.bells.length - 1].time) < Date.now())
+        //   return console.error('Dear lord I think we\'ve travelled through time!');
 
         this.today = today;
         this.trigger('today');
