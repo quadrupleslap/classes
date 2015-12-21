@@ -87,7 +87,7 @@ export default React.createClass({
       {periods? <div className={STYLE.timetable}>
         {periods.map((period, i) => {
           return <div key={i} className={STYLE.period}>
-            <div style={{ 'fontSize': '1.2em' }}>{ period.title || <em style={{ color: '#AAA' }}>Free</em> }</div>
+            <div style={{ 'fontSize': '1.2em', 'color': period.title? null : '#AAA' }}>{ period.title || 'Free' }</div>
             <div style={{ 'fontSize': '1.5em' }}>{ period.room  || '' }</div>
           </div>;
         })}
