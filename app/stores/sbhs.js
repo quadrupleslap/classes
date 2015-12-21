@@ -351,9 +351,9 @@ class SBHSStore extends Emitter {
                     };
 
                   periods.push({
-                    title: subjects[j].title,
+                    title: subject.title,
                     room: rawPeriod['room'],
-                    teacher: subjects[j].teacher
+                    teacher: subject.teacher
                   });
                 } else {
                   periods.push({});
