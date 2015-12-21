@@ -256,7 +256,7 @@ class SBHSStore extends Emitter {
 
   _fetchNotices() {
     if (this.token) {
-      get(`https://student.sbhs.net.au/api/dailynews/list.json?date=2015-12-01&access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
+      get(`https://student.sbhs.net.au/api/dailynews/list.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load notices. Error: ${err} Data: ${objectString}.`) //TODO: Snackbar.
 
