@@ -8,11 +8,11 @@ import Centered from '../centered';
 import Loader from '../loader';
 import Expandable from '../expandable';
 
+import {DAYS} from '../../data/day-constants';
+
 import STYLE from './style.css';
 
-//TODO: What if notices is outdated?
-const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
+//TODO: Snackbar if notices is outdated.
 export default React.createClass({
   getInitialState() {
     return {
@@ -78,7 +78,7 @@ export default React.createClass({
           if (notice.meeting) {
             let meetingDate = new Date(notice.meeting.date);
             meeting = <span style={{ 'color': '#757575' }}>
-              {` on ${WEEKDAYS[meetingDate.getDay()]} ${meetingDate.getDate()}` + ( notice.meeting.time? ', ' + notice.meeting.time : '' )}
+              {` on ${DAYS[meetingDate.getDay()]} ${meetingDate.getDate()}` + ( notice.meeting.time? ', ' + notice.meeting.time : '' )}
             </span>;
           } else {
             meeting = null;
@@ -87,7 +87,7 @@ export default React.createClass({
           return <Expandable
             className={STYLE.notice}
             key={i}
-            title={<div>
+            title={<div className={STYLE.title}>
               <div style={{ 'fontSize': '1.2em' }}>
                 <span>{ notice.title }</span>
                 {meeting}

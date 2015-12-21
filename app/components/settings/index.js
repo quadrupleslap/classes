@@ -37,21 +37,39 @@ export default React.createClass({
 
   render() {
     return <Centered vertical horizontal>
-      <Toggle enabled={this.state.expandNotices} onChange={(newState) => SettingsStore.update({ expandNotices: newState })} />
-      <select
-        onChange={e => SettingsStore.update({ noticesFilter: e.target.value || null })}
-        value={this.state.noticesFilter}
-        className={STYLE.select} >
-        <option value=''>All Years</option>
-        <option value='7'>Year 7</option>
-        <option value='8'>Year 8</option>
-        <option value='9'>Year 9</option>
-        <option value='10'>Year 10</option>
-        <option value='11'>Year 11</option>
-        <option value='12'>Year 12</option>
-        <option value='Staff'>Staff</option>
-      </select>
-      <div className={STYLE.dangerButton} onClick={this.clearAllData}>Clear All Data</div>
+      <div className={STYLE.settings}>
+        <div className={STYLE.labels}>
+          <div>Expand Notices</div>
+          <div>Notices Filter</div>
+          <div>Content Settings</div>
+        </div>
+
+        <div className={STYLE.controls}>
+          <div>
+            <Toggle enabled={this.state.expandNotices} onChange={(newState) => SettingsStore.update({ expandNotices: newState })} />
+          </div>
+
+          <div>
+            <select
+              onChange={e => SettingsStore.update({ noticesFilter: e.target.value || null })}
+              value={this.state.noticesFilter}
+              className={STYLE.select}>
+              <option value=''>All Years</option>
+              <option value='7'>Year 7</option>
+              <option value='8'>Year 8</option>
+              <option value='9'>Year 9</option>
+              <option value='10'>Year 10</option>
+              <option value='11'>Year 11</option>
+              <option value='12'>Year 12</option>
+              <option value='Staff'>Staff</option>
+            </select>
+          </div>
+
+          <div>
+            <button className={STYLE.dangerButton} onClick={this.clearAllData}>Clear All Data</button>
+          </div>
+        </div>
+      </div>
     </Centered>;
   }
 });

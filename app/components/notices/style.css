@@ -7,13 +7,13 @@
   box-sizing: border-box;
   margin: 8px 0;
   background: #FFF;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 }
 
 .notice {
   padding: 1em;
 }
 
-.notice:not(:last-child) {
-  border-bottom: 1px solid #CCC;
+.title {
+  cursor: pointer;
+  user-select: none;
 }

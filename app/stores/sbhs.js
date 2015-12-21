@@ -3,6 +3,7 @@ import {get} from '../utilities/request';
 import parseTime from '../utilities/parse-time';
 
 import defaultBells from '../data/default-bells';
+import {DAYS, WEEKS} from '../data/day-constants';
 
 import Timer from '../utilities/timer';
 
@@ -10,8 +11,6 @@ import TermsStore from './terms';
 
 let localStorage = window['localStorage'];
 
-const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const WEEKS = ['A', 'B', 'C'];
 const MS_TO_WEEKS = 1/(1000 * 60 * 60 * 24 * 7);
 const THU2SUN = -1000 * 60 * 60 * 24 * 4;
 
@@ -77,7 +76,7 @@ class SBHSStore extends Emitter {
       if (state == null)
         return null;
 
-      return `${WEEKDAYS[date.getDay()]} ${state}`;
+      return `${DAYS[date.getDay()]} ${state}`;
     } else {
       return null;
     }
@@ -119,12 +118,12 @@ class SBHSStore extends Emitter {
         if (terms[i].start >= now) {
           today.date = new Date(terms[i].start);
           day = this._defaultDay(today.date);
-          break
+          break;
         }
       }
     }
 
-    this.day = day;
+    today.day = day;
 
     today.bells = bells.map(bell => {
       return {
@@ -165,7 +164,7 @@ class SBHSStore extends Emitter {
 
   _fetchToday() {
     if (this.token) {
-      get(`https://student.sbhs.net.au/api/timetable/daytimetable.json?&access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
+      get(`https://student.sbhs.net.au/api/timetable/daytimetable.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load day timetable. Error: ${err}. Data: ${objectString}`); //TODO: Snackbar.
 
@@ -257,7 +256,7 @@ class SBHSStore extends Emitter {
 
   _fetchNotices() {
     if (this.token) {
-      get(`https://student.sbhs.net.au/api/dailynews/list.json?access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
+      get(`https://student.sbhs.net.au/api/dailynews/list.json?date=2015-12-01&access_token=${encodeURIComponent(this.token)}`, (err, objectString) => {
         if (err)
           return console.error(`Could not load notices. Error: ${err} Data: ${objectString}.`) //TODO: Snackbar.
 

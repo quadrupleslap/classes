@@ -3,17 +3,8 @@
   max-width: 360px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
-  margin: 8px;
+  margin: 4px;
   box-sizing: border-box;
-}
-
-.controls {
-  background: #212121;
-  color: #FFF;
-}
-
-.timetable {
   background: #FFF;
 }
 
@@ -22,6 +13,8 @@
   text-align: center;
   height: 48px;
   line-height: 48px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .period {
@@ -30,10 +23,6 @@
   align-items: center;
   height: 1.84em;
   padding: 16px;
-}
-
-.period:not(:last-child) {
-  border-bottom: 1px solid #CCC;
 }
 
 .row {

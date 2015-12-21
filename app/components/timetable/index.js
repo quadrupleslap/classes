@@ -9,9 +9,11 @@ import Expandable from '../expandable';
 
 import STYLE from './style.css';
 
+import {WEEKDAYS, WEEKS} from '../../data/day-constants';
+
 export default React.createClass({
   getInitialState() {
-    let weekday = 'Monday', week = 'A';
+    let weekday = WEEKDAYS[0], week = WEEKS[0];
     if (SBHSStore.today && SBHSStore.today.day) {
       let components = SBHSStore.today.day.split(' ');
       weekday = components[0];
@@ -61,7 +63,7 @@ export default React.createClass({
     return <Centered horizontal vertical>
       <div className={STYLE.controls}>
         <div className={STYLE.row}>
-          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((weekday, i) =>
+          {WEEKDAYS.map((weekday, i) =>
             <div
               key={i}
               className={STYLE.control}

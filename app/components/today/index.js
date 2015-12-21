@@ -72,6 +72,7 @@ export default React.createClass({
   render() {
     let {periods, nextBell, nextTime} = this.state;
 
+    //TODO: Remove vw sizing or add a fullscreen button when periods.length.
     return <Centered vertical horizontal>
       {nextBell? <div className={STYLE.next} style={{ 'fontSize': periods.length? '1em' : '3vw' }}>
         <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> in

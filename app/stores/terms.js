@@ -1,12 +1,16 @@
 import Emitter from '../utilities/emitter';
 import {get} from '../utilities/request';
 
+import {WEEKS} from '../data/day-constants';
+
 let localStorage = window['localStorage'];
 
-//TODO: Factor out the 3:15pm assumption.
-//TODO: Put all assumptions in one file.
-//TODO: Holidays.
-const WEEKS = ['A', 'B', 'C'];
+function getLastDay(terms) {
+  let lastDay = new Date(terms[terms.length - 1].end);
+  //TODO: Assumption that all days end at 15:15. Move?
+  lastDay.setHours(15, 15);
+  return lastDay;
+}
 
 function processTerms(rawTerms) {
   return Object.keys(rawTerms).map(i => {
@@ -28,8 +32,7 @@ class TermsStore extends Emitter {
     if (localStorage.terms) {
       let terms = JSON.parse(localStorage.terms);
 
-      let lastDay = new Date(terms[terms.length - 1].end);
-      lastDay.setHours(15, 15);
+      let lastDay = getLastDay(terms);
 
       if (lastDay > Date.now()) {
         this.terms = terms;
@@ -44,8 +47,7 @@ class TermsStore extends Emitter {
     this.terms = terms;
     localStorage.terms = JSON.stringify(terms);
 
-    let lastDay = new Date(terms[terms.length - 1].end);
-    lastDay.setHours(15, 15);
+    let lastDay = getLastDay(terms);
 
     let timeToYearEnd = lastDay - Date.now();
     setTimeout(() => this.fetch(), timeToYearEnd);
@@ -62,8 +64,7 @@ class TermsStore extends Emitter {
 
       let terms = processTerms(JSON.parse(res)['terms']);
 
-      let lastDay = new Date(terms[terms.length - 1].end);
-      lastDay.setHours(15, 15);
+      let lastDay = getLastDay(terms);
 
       if (lastDay > Date.now()) {
         this.storeTerms(terms);
