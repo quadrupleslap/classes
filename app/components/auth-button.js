@@ -45,7 +45,7 @@ export default React.createClass({
 
       case SBHSStore.LOGGED_IN:
         return <Icon
-          style={{ 'margin': 'auto' }}
+          style={{ 'margin': 'auto', 'cursor': 'pointer' }}
           icon='logout'
           onClick={() => {
             SBHSStore.clearCache();
@@ -54,7 +54,7 @@ export default React.createClass({
 
       case SBHSStore.LOGGED_OUT:
         return <Icon
-          style={{ 'margin': 'auto' }}
+          style={{ 'margin': 'auto', 'cursor': 'pointer' }}
           icon='login'
           onClick={() => {
             window.location.href = '/auth/login';

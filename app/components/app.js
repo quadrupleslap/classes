@@ -9,15 +9,20 @@ import AuthButton from './auth-button';
 import Tabs from './tabs';
 import Icon from './icon';
 
-function icon(name) { return <Icon style={{ 'margin': 'auto' }} icon={name} />; }
+function button(icon, tooltip) {
+  return <Icon
+    style={{ 'margin': 'auto', 'cursor': 'pointer' }}
+    icon={icon}
+    title={tooltip} />;
+}
 
 export default React.createClass({
   render() {
     let tabs = [
-      {button: icon('timer'), content: <Today />},
-      {button: icon('calendar'), content: <Timetable />},
-      {button: icon('news'), content: <Notices />},
-      {button: icon('settings'), content: <Settings />},
+      {button: button('timer', 'Today'), content: <Today />},
+      {button: button('calendar', 'Timetable'), content: <Timetable />},
+      {button: button('news', 'Daily Notices'), content: <Notices />},
+      {button: button('settings', 'Settings'), content: <Settings />},
       {},
       {button: <AuthButton />}];
 
