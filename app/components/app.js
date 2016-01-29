@@ -10,10 +10,11 @@ import Tabs from './tabs';
 import Icon from './icon';
 
 function button(icon, tooltip) {
-  return <Icon
-    style={{ 'margin': 'auto', 'cursor': 'pointer' }}
-    icon={icon}
-    title={tooltip} />;
+  return <div
+    style={{ 'margin': 'auto' }}
+    title={tooltip}><Icon
+      style={{ 'cursor': 'pointer' }}
+      icon={icon} /></div>;
 }
 
 export default React.createClass({
