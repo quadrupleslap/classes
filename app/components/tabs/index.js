@@ -14,6 +14,7 @@ export default React.createClass({
       return <li
           key={i}
           className={STYLE.button}
+          //TODO: Separate formatting from this module.
           style={{ 'color': i == this.state.selectedIndex ? '#00BFFF' : null }}
           onClick={tab.content && () => this.setState({ selectedIndex: i })}>
           { tab.button }

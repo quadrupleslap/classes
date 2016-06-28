@@ -26,6 +26,17 @@ html, body, #app {
   background: #FFF;
 }
 
+a {
+  color: #0af;
+  text-decoration: none;
+  transition: .3s;
+  cursor: pointer;
+}
+
+a:hover {
+  color: red;
+}
+
 @media (max-width: 768px) {
   #app { font-size: 12px; }
 }

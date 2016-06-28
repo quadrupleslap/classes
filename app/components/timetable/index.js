@@ -11,6 +11,8 @@ import STYLE from './style.css';
 
 import {WEEKDAYS, WEEKS} from '../../data/day-constants';
 
+const LOGIN_MESSAGE = [<a onClick={() => window.location.href='/auth/login'}>Login</a>, ' to load your timetable!'];
+
 export default React.createClass({
   getInitialState() {
     let weekday = WEEKDAYS[0], week = WEEKS[0];
@@ -47,7 +49,7 @@ export default React.createClass({
       return <Centered vertical horizontal>
         <SBHSException
           loading={<Loader />}
-          loggedOut='Login to load your timetable!'
+          loggedOut={LOGIN_MESSAGE}
           offline='Go online to load your timetable!' />
       </Centered>;
 

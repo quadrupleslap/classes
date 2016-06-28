@@ -12,6 +12,8 @@ import {DAYS} from '../../data/day-constants';
 
 import STYLE from './style.css';
 
+const LOGIN_MESSAGE = [<a onClick={() => window.location.href='/auth/login'}>Login</a>, ' to load your timetable!'];
+
 //TODO: Snackbar if notices is outdated.
 export default React.createClass({
   getInitialState() {
@@ -57,7 +59,7 @@ export default React.createClass({
       return <Centered vertical horizontal>
         <SBHSException
           loading={<Loader />}
-          loggedOut='Login to read the notices!'
+          loggedOut={LOGIN_MESSAGE}
           offline='Go online to read the notices!' />
       </Centered>;
 
