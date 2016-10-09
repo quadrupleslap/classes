@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var path = require('path');
-var ClosureCompilerPlugin = require('webpack-closure-compiler');
 var AppCachePlugin = require('appcache-webpack-plugin');
 var fs = require('fs');
 
@@ -22,7 +21,15 @@ var plugins = [
   ];
 
 if (process.env.NODE_ENV != 'development')
-  plugins.push(new ClosureCompilerPlugin());
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false,
+      drop_console: true,
+      unsafe: true,
+      collapse_vars: true,
+      passes: 2
+    }
+  }));
 
 module.exports = {
   context: path.join(__dirname, 'app'),
