@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/quadrupleslap/classes/issues"
   },
-  "homepage": "https://github.com/quadrupleslap/classes#readme",
+  "homepage": "https://github.com/quadrupleslap/classes",
   "devDependencies": {
     "appcache-webpack-plugin": "^1.2.0",
     "autoprefixer": "^6.1.2",
@@ -37,7 +37,6 @@
     "express-session": "^1.11.3",
     "react": "^0.14.1",
     "react-dom": "^0.14.1",
-    "simple-oauth2": "^0.2.1",
-    "ytdl-core": "^0.7.8"
+    "simple-oauth2": "^0.2.1"
   }
 }

@@ -29,8 +29,8 @@ class TermsStore extends Emitter {
     super();
 
     this.terms = null;
-    if (localStorage.terms) {
-      let terms = JSON.parse(localStorage.terms);
+    if (localStorage['terms']) {
+      let terms = JSON.parse(localStorage['terms']);
 
       let lastDay = getLastDay(terms);
 
@@ -45,7 +45,7 @@ class TermsStore extends Emitter {
 
   storeTerms(terms) {
     this.terms = terms;
-    localStorage.terms = JSON.stringify(terms);
+    localStorage['terms'] = JSON.stringify(terms);
 
     let lastDay = getLastDay(terms);
 

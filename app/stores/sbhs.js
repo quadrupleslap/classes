@@ -24,8 +24,8 @@ class SBHSStore extends Emitter {
 
     this.state = this.LOADING;
     this.token = null;
-    this.notices = localStorage.notices ? JSON.parse(localStorage.notices) : null;
-    this.timetable = localStorage.timetable ? JSON.parse(localStorage.timetable) : null;
+    this.notices = localStorage['notices'] ? JSON.parse(localStorage['notices']) : null;
+    this.timetable = localStorage['timetable'] ? JSON.parse(localStorage['timetable']) : null;
     this.today = this._defaultToday();
 
     this.bind('token', () => {
@@ -83,9 +83,9 @@ class SBHSStore extends Emitter {
   }
 
   clearCache() {
-    delete localStorage.token;
-    delete localStorage.notices;
-    delete localStorage.timetable;
+    delete localStorage['token'];
+    delete localStorage['notices'];
+    delete localStorage['timetable'];
   }
 
   _defaultToday() {
@@ -144,8 +144,8 @@ class SBHSStore extends Emitter {
       this.trigger('token');
     };
 
-    if (localStorage.token) {
-      let data = JSON.parse(localStorage.token);
+    if (localStorage['token']) {
+      let data = JSON.parse(localStorage['token']);
       if (data['expires'] > Date.now())
         return done(data);
     }
@@ -157,7 +157,7 @@ class SBHSStore extends Emitter {
         return this.trigger('token');
       }
 
-      localStorage.token = res;
+      localStorage['token'] = res;
       done(JSON.parse(res));
     });
   }
@@ -288,7 +288,7 @@ class SBHSStore extends Emitter {
           })
         };
 
-        localStorage.notices = JSON.stringify(this.notices);
+        localStorage['notices'] = JSON.stringify(this.notices);
         this.trigger('notices');
       });
     }
@@ -367,7 +367,7 @@ class SBHSStore extends Emitter {
             })
         };
 
-        localStorage.timetable = JSON.stringify(this.timetable);
+        localStorage['timetable'] = JSON.stringify(this.timetable);
         this.trigger('timetable');
       });
     }

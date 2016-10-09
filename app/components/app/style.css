@@ -5,9 +5,8 @@
   display: flex;
   box-sizing: border-box;
   transition: all 0.2s;
-  border: 0 solid #AAFFFF;
 }
 
-.button:hover {
-  border-width: 4px;
+.button:active {
+  color: cyan;
 }
