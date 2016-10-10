@@ -6,7 +6,7 @@ export default function (props) {
     'flexDirection': 'column',
     'alignItems': props.horizontal ? 'center' : null,
     'justifyContent': props.vertical ? 'center' : null,
-    'min-height': '100%',
-    'min-width': '100%'
+    'minHeight': '100%',
+    'minWidth': '100%'
   }} children={props.children} />;
 }
