@@ -11,7 +11,9 @@ import STYLE from './style.css';
 
 import {WEEKDAYS, WEEKS} from '../../data/day-constants';
 
-const LOGIN_MESSAGE = [<a onClick={() => window.location.href='/auth/login'}>Login</a>, ' to load your timetable!'];
+const LOGIN_MESSAGE = <span>
+  <a onClick={() => window.location.href='/auth/login'}>Login</a> to load your timetable!
+</span>;
 
 export default React.createClass({
   getInitialState() {

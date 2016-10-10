@@ -40,7 +40,7 @@ export default React.createClass({
 
   componentWillReceiveProps(props) {
     if (props.to != this.props.to) {
-      clearTimeout(this.timeoutID);
+      window.clearTimeout(this.state.timeoutID);
       this.tick();
     }
   },

@@ -12,7 +12,9 @@ import {DAYS} from '../../data/day-constants';
 
 import STYLE from './style.css';
 
-const LOGIN_MESSAGE = [<a onClick={() => window.location.href='/auth/login'}>Login</a>, ' to load your timetable!'];
+const LOGIN_MESSAGE = <span>
+  <a onClick={() => window.location.href='/auth/login'}>Login</a> to see the notices!
+</span>;
 
 //TODO: Snackbar if notices is outdated.
 export default React.createClass({

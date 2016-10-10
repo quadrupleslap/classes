@@ -16,12 +16,12 @@ export default React.createClass({
           className={STYLE.button}
           //TODO: Separate formatting from this module.
           style={{ 'color': i == this.state.selectedIndex ? '#00BFFF' : null }}
-          onClick={tab.content && () => this.setState({ selectedIndex: i })}>
+          onClick={tab.content ? () => this.setState({ selectedIndex: i }) : tab.onClick}>
           { tab.button }
         </li>;
     });
 
-    return <div style={{ height: '100%' }}>
+    return <div className={STYLE.container}>
       <ul className={STYLE.nav}>{ buttons }</ul>
       <div className={STYLE.content}>{ this.props.tabs[this.state.selectedIndex].content }</div>
     </div>;
