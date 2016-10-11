@@ -104,22 +104,24 @@ export default React.createClass({
           }
 
           if (!bell.room) {
-            return <div key={i} className={STYLE.period}>
-              <span>
-                <span style={{
-                  'fontSize': '1.2em',
-                  'color': bell.variations.indexOf('title') < 0 ? null : VARIATION_COLOR
-                }}>
-                  {bell.title}
-                </span>
-                {' '}
-                <span style={{ 'color': '#757575' }}>
-                  {'at '}
-                  <span style={{ 'color': bell.variations.indexOf('time') < 0 ? null : VARIATION_COLOR }}>
-                    {bell.time || 'the time of reckoning'}
-                  </span>
-                </span>
-              </span>
+            return <div
+              key={i}
+              className={STYLE.period}
+              style={{ 'color': '#757575' }}>
+              <div style={{
+                'flexGrow': '1',
+                'fontSize': '1.2em',
+                'marginBottom': '0.3em',
+                'color': bell.variations.indexOf('title') < 0 ? null : VARIATION_COLOR
+              }}>
+                {bell.title}
+              </div>
+              <div style={{
+                'fontSize': '1.2em',
+                'color': bell.variations.indexOf('time') < 0 ? null : VARIATION_COLOR
+              }}>
+                {bell.time}
+              </div>
             </div>;
           }
 
