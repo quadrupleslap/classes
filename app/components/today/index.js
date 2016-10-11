@@ -130,7 +130,7 @@ export default React.createClass({
                 'marginBottom': '0.3em',
                 'color': bell.variations.indexOf('title') < 0 ? null : VARIATION_COLOR
               }}>{bell.title}</div>
-              <div style={{ 'fontSize': '0.8em' }}>
+              <div style={{ 'fontSize': '0.9em' }}>
                 <span>
                   {'at '}
                   <span style={{ 'color': bell.variations.indexOf('time') < 0 ? null : VARIATION_COLOR }}>
