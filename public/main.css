@@ -38,5 +38,9 @@ a:hover {
 }
 
 @media (max-width: 480px) {
+  #app { font-size: 14px; }
+}
+
+@media (max-width: 360px) {
   #app { font-size: 12px; }
 }
