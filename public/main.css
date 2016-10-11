@@ -36,3 +36,7 @@ a {
 a:hover {
   color: red;
 }
+
+@media (max-width: 480px) {
+  #app { font-size: 12px; }
+}
