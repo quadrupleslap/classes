@@ -26,7 +26,7 @@ class SBHSStore extends Emitter {
     this.token = null;
     this.notices = localStorage['notices'] ? JSON.parse(localStorage['notices']) : null;
     this.timetable = localStorage['timetable'] ? JSON.parse(localStorage['timetable']) : null;
-    this.today = this._defaultToday();
+    this._defaultToday();
 
     this.bind('token', () => {
       this._fetchToday();
@@ -36,9 +36,7 @@ class SBHSStore extends Emitter {
 
     this.bind('today', () => {
       Timer(() => {
-        this.today = this._defaultToday();
-        this.trigger('today');
-
+        this._defaultToday();
         this._fetchToday();
         this._fetchNotices();
       }, parseTime(new Date(this.today.date), this.today.bells[this.today.bells.length - 1].time));
@@ -51,8 +49,7 @@ class SBHSStore extends Emitter {
 
     TermsStore.bind('terms', () => {
       if (this.today && this.today.default) {
-        this.today = this._defaultToday();
-        this.trigger('today');
+        this._defaultToday();
       }
     });
 
@@ -126,14 +123,23 @@ class SBHSStore extends Emitter {
     today.day = day;
 
     today.bells = bells.map(bell => {
-      return {
-        title: bell.bell.replace(/^(\d+)$/, 'Period $1'),
+      let res = {
+        title: bell.bell,
         time: bell.time,
+        isPeriod: false,
         variations: []
-      };
+      }
+
+      if (/^\d+$/.test(res.title)) {
+        res.isPeriod = true;
+        res.title = 'Period ' + res.title;
+      }
+
+      return res;
     });
 
-    return today;
+    this.today = today;
+    this.trigger('today');
   }
 
   _fetchToken() {
@@ -175,12 +181,12 @@ class SBHSStore extends Emitter {
         let bells = [], i = {};
         data['bells'].forEach(bell => {
           let id = bell['bell'];
-
           i[id] = bells.length;
 
-          let subjectData;
-          if (id in periods)
-            subjectData = data['timetable']['subjects'][periods[id].year + periods[id].title];
+          let subjectData = null;
+          if (id in periods) {
+            subjectData = data['timetable']['subjects'][periods[id]['year'] + periods[id]['title']];
+          }
 
           if (subjectData) {
             bells.push({
@@ -188,12 +194,15 @@ class SBHSStore extends Emitter {
               time: bell.time,
               teacher: subjectData['fullTeacher'],
               room: periods[id]['room'],
+              isPeriod: true,
               variations: []
             });
           } else {
             bells.push({
               title: bell['bellDisplay'],
-              time: bell['time']
+              time: bell['time'],
+              isPeriod: /^\d+$/.test(bell['bell']),
+              variations: []
             });
           }
         });
@@ -238,6 +247,7 @@ class SBHSStore extends Emitter {
             return {
               title: bell['bell'].replace(/^(\d+)$/, 'Period $1'),
               time: bell['time'],
+              isPeriod: /^\d+$/.test(bell['bell']),
               variations: data['bellsAltered'] ? ['time'] : []
             };
           }),
@@ -245,8 +255,8 @@ class SBHSStore extends Emitter {
         };
 
         //TODO: Snackbar.
-        if (parseTime(new Date(today.date), today.bells[today.bells.length - 1].time) < Date.now())
-          return console.error('Dear lord I think we\'ve travelled through time!');
+        // if (parseTime(new Date(today.date), today.bells[today.bells.length - 1].time) < Date.now())
+        //   return console.error('Dear lord I think we\'ve travelled through time!');
 
         this.today = today;
         this.trigger('today');

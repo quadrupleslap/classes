@@ -28,7 +28,7 @@ export default React.createClass({
     if (SBHSStore.today) {
       this.setState({
         bells: SBHSStore.today.bells,
-        periods: SBHSStore.today.bells.filter(bell => bell.room),
+        periods: SBHSStore.today.bells.filter(bell => bell.isPeriod),
         date: SBHSStore.today.date
       }, this.getNext);
     }
@@ -70,7 +70,8 @@ export default React.createClass({
   },
 
   render() {
-    let {periods, nextBell, nextTime} = this.state;
+    let {periods, nextBell, nextTime} = this.state,
+        simple = !periods.some(e => e.room);
 
     //TODO: Remove vw sizing or add a fullscreen button when periods.length.
     return <Centered vertical horizontal>
@@ -83,26 +84,75 @@ export default React.createClass({
       </div> : <Loader />}
 
       {periods.length? <div className={STYLE.today}>
-        {periods.map((bell, i) =>
-          <div key={i} className={STYLE.period}>
-            <div>
+        {periods.map((bell, i) => {
+          if (simple) {
+            return <div key={i} className={STYLE.period} style={{ padding: '0.8em 1em' }}>
+              <div style={{
+                'flexGrow': '1',
+                'fontSize': '1.5em',
+                'color': bell.variations.indexOf('title') < 0 ? '#757575' : VARIATION_COLOR
+              }}>
+                {bell.title}
+              </div>
+              <div style={{
+                  'fontSize': '1.5em',
+                  'color': bell.variations.indexOf('time') < 0 ? null : VARIATION_COLOR
+                }}>
+                {bell.time}
+              </div>
+            </div>;
+          }
+
+          if (!bell.room) {
+            return <div key={i} className={STYLE.period}>
+              <span>
+                <span style={{
+                  'fontSize': '1.2em',
+                  'color': bell.variations.indexOf('title') < 0 ? null : VARIATION_COLOR
+                }}>
+                  {bell.title}
+                </span>
+                {' '}
+                <span style={{ 'color': '#757575' }}>
+                  {'at '}
+                  <span style={{ 'color': bell.variations.indexOf('time') < 0 ? null : VARIATION_COLOR }}>
+                    {bell.time || 'the time of reckoning'}
+                  </span>
+                </span>
+              </span>
+            </div>;
+          }
+
+          return <div key={i} className={STYLE.period}>
+            <div style={{ 'flexGrow': '1' }}>
               <div style={{
                 'fontSize': '1.2em',
                 'marginBottom': '8px',
                 'color': bell.variations.indexOf('title') < 0 ? null : VARIATION_COLOR
               }}>{bell.title}</div>
-              <div style={{
-                'fontSize': '0.8em'
-              }}>with <span style={{
-                'color': bell.variations.indexOf('teacher') < 0 ? null : VARIATION_COLOR
-              }}>{bell.teacher || 'no one'}</span></div>
+              <div style={{ 'fontSize': '0.8em' }}>
+                <span>
+                  {'at '}
+                  <span style={{ 'color': bell.variations.indexOf('time') < 0 ? null : VARIATION_COLOR }}>
+                    {bell.time || 'the time of reckoning'}
+                  </span>
+                </span>
+                {' '}
+                <span style={{ 'color': '#757575' }}>
+                  {'with '}
+                  <span style={{ 'color': bell.variations.indexOf('teacher') < 0 ? null : VARIATION_COLOR }}>
+                    {bell.teacher || 'no one'}
+                  </span>
+                </span>
+              </div>
             </div>
             <div style={{
                 'fontSize': '1.5em',
                 'color': bell.variations.indexOf('room') < 0 ? null : VARIATION_COLOR
               }}>{bell.room}
             </div>
-          </div>)}
+          </div>;
+        })}
       </div> :null}
     </Centered>;
   }
