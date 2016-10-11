@@ -86,7 +86,7 @@ export default React.createClass({
       {periods.length? <div className={STYLE.today}>
         {periods.map((bell, i) => {
           if (simple) {
-            return <div key={i} className={STYLE.period} style={{ padding: '0.8em 1em' }}>
+            return <div key={i} className={STYLE.period}>
               <div style={{
                 'flexGrow': '1',
                 'fontSize': '1.5em',
@@ -127,7 +127,7 @@ export default React.createClass({
             <div style={{ 'flexGrow': '1' }}>
               <div style={{
                 'fontSize': '1.2em',
-                'marginBottom': '8px',
+                'marginBottom': '0.3em',
                 'color': bell.variations.indexOf('title') < 0 ? null : VARIATION_COLOR
               }}>{bell.title}</div>
               <div style={{ 'fontSize': '0.8em' }}>

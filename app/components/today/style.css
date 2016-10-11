@@ -9,7 +9,8 @@
 .period {
   display: flex;
   align-items: center;
-  padding: 1em;
+  flex-shrink: 0;
+  padding: 0.8em 1em;
 }
 
 .next {
