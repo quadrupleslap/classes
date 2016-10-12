@@ -1,7 +1,8 @@
 import Emitter from '../utilities/emitter';
 import {get} from '../utilities/request';
-
 import {WEEKS} from '../data/day-constants';
+
+import NetworkStore from './network';
 
 let localStorage = window['localStorage'];
 
@@ -32,15 +33,19 @@ class TermsStore extends Emitter {
     if (localStorage['terms']) {
       let terms = JSON.parse(localStorage['terms']);
 
-      let lastDay = getLastDay(terms);
-
-      if (lastDay > Date.now()) {
+      if (getLastDay(terms) > Date.now()) {
         this.terms = terms;
         return;
       }
     }
 
     this.fetch();
+
+    NetworkStore.bind('online', () => {
+      if (NetworkStore.online && (!this.terms || getLastDay(this.terms) > Date.now())) {
+        this.fetch();
+      }
+    });
   }
 
   storeTerms(terms) {
@@ -64,9 +69,7 @@ class TermsStore extends Emitter {
 
       let terms = processTerms(JSON.parse(res)['terms']);
 
-      let lastDay = getLastDay(terms);
-
-      if (lastDay > Date.now()) {
+      if (getLastDay(terms) > Date.now()) {
         this.storeTerms(terms);
       } else {
         get(`https://student.sbhs.net.au/api/calendar/terms.json?year=${year + 1}`, (err, res) => {

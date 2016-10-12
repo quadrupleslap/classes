@@ -8,6 +8,7 @@ import {DAYS, WEEKS} from '../data/day-constants';
 import Timer from '../utilities/timer';
 
 import TermsStore from './terms';
+import NetworkStore from './network';
 
 let localStorage = window['localStorage'];
 
@@ -46,6 +47,12 @@ class SBHSStore extends Emitter {
       this._fetchToday();
       this._fetchNotices();
     }, 15 * 60 * 1000); // 15 minutes.
+
+    NetworkStore.bind('online', () => {
+      if (NetworkStore.online) {
+        this._fetchToken();
+      }
+    });
 
     TermsStore.bind('terms', () => {
       if (this.today && this.today.default) {
@@ -152,8 +159,10 @@ class SBHSStore extends Emitter {
 
     if (localStorage['token']) {
       let data = JSON.parse(localStorage['token']);
-      if (data['expires'] > Date.now())
-        return done(data);
+      if (data['expires'] > Date.now()) {
+        done(data);
+        return;
+      }
     }
 
     get('/auth/token', (err, res) => {

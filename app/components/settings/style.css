@@ -25,6 +25,10 @@
   font: inherit;
 }
 
+.select > option {
+  font-size: 1rem;
+}
+
 .danger-button {
   background-color: #ED5565;
   color: #FFF;

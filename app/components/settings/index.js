@@ -39,12 +39,23 @@ export default React.createClass({
     return <Centered vertical horizontal>
       <div className={STYLE.settings}>
         <div className={STYLE.labels}>
+          <div>Like Us</div>
           <div>Expand Notices</div>
           <div>Notices Filter</div>
           <div>Content Settings</div>
         </div>
 
         <div className={STYLE.controls}>
+          <div>
+            <iframe
+              src={`//facebook.com/plugins/like?href=${encodeURIComponent(window.location.hostname)}&amp;layout=button_count`}
+              scrolling="no"
+              frameborder="0"
+              style={{'border': 'none', 'width': '90px', 'height': '20px'}}
+              allowTransparency="true">
+            </iframe>
+          </div>
+
           <div>
             <Toggle enabled={this.state.expandNotices} onChange={(newState) => SettingsStore.update({ expandNotices: newState })} />
           </div>

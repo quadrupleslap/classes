@@ -73,9 +73,8 @@ export default React.createClass({
     let {periods, nextBell, nextTime} = this.state,
         simple = !periods.some(e => e.room);
 
-    //TODO: Remove vw sizing or add a fullscreen button when periods.length.
     return <Centered vertical horizontal>
-      {nextBell? <div className={STYLE.next} style={{ 'fontSize': periods.length? '1em' : '3vw' }}>
+      {nextBell? <div className={STYLE.next}>
         <span style={{ 'fontSize': '1.5em' }}>{ nextBell.title }</span> in
         <Countdown
           to={nextTime}
