@@ -48,7 +48,9 @@ export default React.createClass({
         <div className={STYLE.controls}>
           <div>
             <iframe
-              src={`//facebook.com/plugins/like?href=${encodeURIComponent(window.location.hostname)}&amp;layout=button_count`}
+              src={`//facebook.com/plugins/like?href=${
+                encodeURIComponent(window.location.protocol + '//' + window.location.hostname)
+              }&amp;layout=button_count`}
               scrolling="no"
               frameborder="0"
               style={{'border': 'none', 'width': '90px', 'height': '20px'}}
