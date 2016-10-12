@@ -51,10 +51,10 @@ export default React.createClass({
               src={`//facebook.com/plugins/like?href=${
                 encodeURIComponent(window.location.protocol + '//' + window.location.hostname)
               }&layout=button_count`}
-              scrolling="no"
-              frameborder="0"
+              scrolling='no'
+              frameborder='0'
               style={{'border': 'none', 'width': '90px', 'height': '20px'}}
-              allowTransparency="true">
+              allowTransparency='true'>
             </iframe>
           </div>
 
